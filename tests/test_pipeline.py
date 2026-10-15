@@ -7,14 +7,19 @@ Validates:
 3. Chou-Talalay Combination Index (CI) synergy engine (SAVANNAH, MARIPOSA)
 4. Spatial Pharmacokinetic stromal penetration penalty
 5. Clonal cis vs trans C797S resistance branching
+6. Orchestrator synergy evaluation and Zhou et al. (PMID 33958875) longitudinal timeline
 """
 
 import sys
 import os
+import json
 import unittest
+from unittest import mock
 import numpy as np
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+CASE_FILE = os.path.join(ROOT_DIR, "data", "sample_case.json")
+sys.path.insert(0, ROOT_DIR)
 
 from models.fusion import SpatialPerceiverResampler, DecoupledTanhGatedCrossAttention, OmniBioFusionPipeline
 from services.combination_synergy import CombinationSynergyEngine
@@ -71,6 +76,50 @@ class TestOmniBioAgent(unittest.TestCase):
         pk_small = MultiAgentOrchestrator.calculate_spatial_pk_penetration(mw=400.0, stroma_pct=65.0)
         pk_protac = MultiAgentOrchestrator.calculate_spatial_pk_penetration(mw=900.0, stroma_pct=65.0)
         self.assertGreater(pk_small["penetration_efficiency_pct"], pk_protac["penetration_efficiency_pct"])
+
+    def _run_sample_case(self):
+        with open(CASE_FILE, "r", encoding="utf-8") as f:
+            case = json.load(f)
+        # Force the offline fallbacks so the suite is deterministic and network-free.
+        with mock.patch("urllib.request.urlopen", side_effect=OSError("offline")):
+            return self.orchestrator.run_full_pipeline(case)
+
+    def test_orchestrator_synergy_savannah_mariposa(self):
+        """Verifies the orchestrator scores SAVANNAH and MARIPOSA via CombinationSynergyEngine."""
+        result = self._run_sample_case()
+        synergy = {r["regimen"]: r for r in result["combination_synergy"]}
+
+        savannah = synergy["Osimertinib + Savolitinib"]
+        self.assertEqual(savannah["combination_index"], 0.38)
+        self.assertTrue(savannah["is_synergistic"])
+        self.assertIn("SAVANNAH", savannah["trial"])
+
+        mariposa = synergy["Amivantamab + Lazertinib"]
+        self.assertEqual(mariposa["combination_index"], 0.44)
+        self.assertEqual(mariposa["median_pfs_months"], 23.7)
+        self.assertTrue(any("anticoagulation" in g for g in mariposa["guardrails"]))
+
+        # Zhou et al. latest sequencing is cis-C797S, so Gefitinib + Osimertinib must be antagonistic.
+        gef_osi = synergy["Osimertinib + Gefitinib"]
+        self.assertGreater(gef_osi["combination_index"], 1.1)
+        self.assertIn("CONTRAINDICATED", gef_osi["verdict"])
+
+        self.assertTrue(any(t["agent"] == "CombinationSynergyAgent" for t in result["agent_trace"]))
+
+    def test_orchestrator_zhou_longitudinal_timeline(self):
+        """Verifies the Zhou et al. (PMID 33958875) treatment timeline is reflected in the output."""
+        result = self._run_sample_case()
+        timeline = result["longitudinal_timeline"]
+
+        self.assertEqual(timeline["pmid"], "33958875")
+        self.assertEqual(result["patient_summary"]["id"], "PT-ZHOU-2021-OTT")
+        self.assertEqual([l["line"] for l in timeline["lines"]], [1, 2, 3, 4])
+        self.assertEqual([l["pfs_months"] for l in timeline["lines"]], [7.0, 10.0, 8.0, 9.0])
+        self.assertEqual(timeline["lines"][2]["start_month"], 17.0)
+        self.assertEqual(timeline["total_tki_months"], 34.0)
+        self.assertEqual(timeline["lines"][1]["resistance_snapshot"], "post_osimertinib")
+        self.assertTrue(any("C797S (in trans)" in m["variant"] for m in timeline["lines"][1]["mutations_at_progression"]))
+        self.assertTrue(any("C797S (in cis)" in m["variant"] for m in timeline["lines"][2]["mutations_at_progression"]))
 
 
 if __name__ == "__main__":

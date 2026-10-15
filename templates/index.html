@@ -47,13 +47,14 @@
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <div class="flex flex-wrap items-center gap-2 mb-2">
-            <span class="px-2.5 py-0.5 text-xs font-semibold rounded bg-cyan-950 text-cyan-400 border border-cyan-800 mono">CASE: PT-ONCO-2026-X8</span>
-            <span class="px-2.5 py-0.5 text-xs font-semibold rounded bg-rose-950 text-rose-400 border border-rose-800">STAGE IV NSCLC</span>
-            <span class="px-2.5 py-0.5 text-xs font-semibold rounded bg-amber-950 text-amber-400 border border-amber-800 mono">T790M + ctDNA C797S RISK</span>
+            <span id="caseIdBadge" class="px-2.5 py-0.5 text-xs font-semibold rounded bg-cyan-950 text-cyan-400 border border-cyan-800 mono">CASE: PT-ZHOU-2021-OTT</span>
+            <span id="caseStageBadge" class="px-2.5 py-0.5 text-xs font-semibold rounded bg-rose-950 text-rose-400 border border-rose-800">STAGE IV NSCLC</span>
+            <span class="px-2.5 py-0.5 text-xs font-semibold rounded bg-amber-950 text-amber-400 border border-amber-800 mono">T790M + cis/trans C797S</span>
+            <a id="casePmidBadge" href="https://pubmed.ncbi.nlm.nih.gov/33958875/" target="_blank" rel="noopener" class="px-2.5 py-0.5 text-xs font-semibold rounded bg-slate-800 text-slate-300 border border-slate-700 mono hover:text-white">PMID 33958875</a>
           </div>
-          <h2 class="text-2xl font-bold text-white">Metastatic Adenocarcinoma with Acquired T790M & Emergent C797S</h2>
-          <p class="text-sm text-slate-400 mt-1 max-w-3xl">
-            Prior Erlotinib relapsed after 14 months due to T790M ATP-affinity restoration. Real-time liquid biopsy monitoring detects emergent subclonal <span class="text-amber-400 mono font-semibold">C797S (8% VAF)</span>. Evaluating irreversible covalent vs. 4th-Gen allosteric vs. PROTAC therapies.
+          <h2 class="text-2xl font-bold text-white">EGFR Exon 19del Adenocarcinoma with Sequential T790M → trans → cis C797S Evolution</h2>
+          <p id="caseSummary" class="text-sm text-slate-400 mt-1 max-w-3xl">
+            Real clinical case (Zhou et al., OncoTargets and Therapy 2021). Four TKI-based lines: Gefitinib → Osimertinib → Osimertinib + Gefitinib (T790M-trans-C797S) → Osimertinib + Anlotinib, ending with an allelic shift to <span class="text-amber-400 mono font-semibold">cis-C797S</span>. Evaluating dual-drug synergy (SAVANNAH, MARIPOSA) vs. 4th-Gen and PROTAC therapies.
           </p>
         </div>
         <button id="runAnalysisBtn" onclick="triggerAnalysis()" class="px-6 py-3.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center space-x-2 shrink-0">
@@ -97,7 +98,7 @@
               <circle cx="145" cy="135" r="16" fill="#ef4444" opacity="0.8"/>
             </svg>
             <div class="absolute bottom-2 left-2 right-2 bg-slate-950/90 backdrop-blur px-2.5 py-1.5 rounded border border-slate-800 text-[11px] mono flex justify-between">
-              <span class="text-rose-400">Desmoplasia: 64.2%</span>
+              <span id="desmoplasiaLabel" class="text-rose-400">Desmoplasia: 68.0%</span>
               <span class="text-amber-400">TIL: Immune-Excluded</span>
             </div>
           </div>
@@ -149,20 +150,23 @@
             </h3>
             <span class="text-xs text-slate-400 mono">ctDNA + Trials</span>
           </div>
-          <p class="text-xs text-slate-400 mb-3">Temporal tracking of L858R, T790M gatekeeper, and C797S emergence.</p>
-          
+          <p class="text-xs text-slate-400 mb-3">Temporal tracking of Exon 19del, T790M gatekeeper, and trans → cis C797S emergence.</p>
+
           <div class="w-full h-56 bg-slate-950 rounded-xl p-3 border border-slate-800 overflow-y-auto space-y-2 mono text-xs">
             <div class="p-2 rounded bg-slate-900 border border-slate-800 text-slate-300">
-              <span class="text-cyan-400 font-bold">L858R (44% VAF):</span> Sensitizing driver mutation.
+              <span class="text-cyan-400 font-bold">Exon 19del (baseline):</span> Sensitizing driver; Gefitinib PR for 7 months.
             </div>
             <div class="p-2 rounded bg-slate-900 border border-slate-800 text-slate-300">
-              <span class="text-amber-400 font-bold">T790M (38% VAF):</span> Restores ATP affinity; Erlotinib resistant.
+              <span class="text-amber-400 font-bold">T790M (post-Gefitinib):</span> Restores ATP affinity; switched to Osimertinib.
+            </div>
+            <div class="p-2 rounded bg-slate-900 border border-slate-800 text-slate-300">
+              <span class="text-amber-400 font-bold">C797S in trans (post-Osimertinib):</span> Responds to 1st + 3rd-Gen TKI combination.
             </div>
             <div class="p-2 rounded bg-slate-900 border border-rose-900/60 text-slate-300 bg-rose-950/20">
-              <span class="text-rose-400 font-bold">C797S RISK (8% VAF):</span> Abolishes Osimertinib covalent Michael bond.
+              <span class="text-rose-400 font-bold">C797S in cis (post-combination):</span> Abolishes Osimertinib covalent Michael bond; 1st + 3rd-Gen antagonistic.
             </div>
             <div class="p-2 rounded bg-slate-900 border border-slate-800 text-slate-300">
-              <span class="text-emerald-400 font-bold">TRIAL EVIDENCE:</span> FLAURA (PMID 29151359) Level 1A.
+              <span class="text-emerald-400 font-bold">CASE EVIDENCE:</span> Zhou et al. 2021 (PMID 33958875).
             </div>
           </div>
         </div>
@@ -226,6 +230,46 @@
       </div>
     </div>
 
+    <!-- LONGITUDINAL TREATMENT TIMELINE (Zhou et al., PMID 33958875) -->
+    <div id="timelineSection" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+      <div class="border-b border-slate-800 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h3 class="text-lg font-bold text-white">Longitudinal Treatment & Clonal Evolution Timeline</h3>
+          <p id="timelineSource" class="text-xs text-slate-400 mt-0.5">Progression-free survival per line, with sequencing at each progression.</p>
+        </div>
+        <div class="flex space-x-2">
+          <span class="px-2.5 py-1 rounded bg-slate-800 border border-slate-700 text-xs mono text-slate-300">Time on TKI: <span id="timelineTotal" class="text-cyan-400">--</span></span>
+          <span class="px-2.5 py-1 rounded bg-slate-800 border border-slate-700 text-xs mono text-slate-300">Overall survival: <span id="timelineOs" class="text-emerald-400">--</span></span>
+        </div>
+      </div>
+      <div id="timelineChart" class="space-y-3"></div>
+      <div id="timelineAxis" class="relative h-5 ml-0 md:ml-[14.5rem]text-[10px] text-slate-500 mono border-t border-slate-800"></div>
+    </div>
+
+    <!-- DUAL-DRUG CHOU-TALALAY SYNERGY MATRIX -->
+    <div id="synergySection" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+      <div class="border-b border-slate-800 pb-4">
+        <h3 class="text-lg font-bold text-white">Dual-Drug Synergy Matrix (Chou-Talalay Combination Index)</h3>
+        <p class="text-xs text-slate-400 mt-0.5">CI = D₁/Dx₁ + D₂/Dx₂ + α·(D₁·D₂)/(Dx₁·Dx₂) · CI &lt; 0.9 synergy · 0.9–1.1 additive · CI &gt; 1.1 antagonism. Lower is better.</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs">
+          <thead>
+            <tr class="text-left text-[11px] uppercase tracking-wider text-slate-400 border-b border-slate-800">
+              <th class="py-2 pr-4 font-semibold">Regimen</th>
+              <th class="py-2 pr-4 font-semibold">Drug 1 × Drug 2</th>
+              <th class="py-2 pr-4 font-semibold w-64">Combination Index</th>
+              <th class="py-2 pr-4 font-semibold">mPFS</th>
+              <th class="py-2 pr-4 font-semibold">ORR</th>
+              <th class="py-2 pr-4 font-semibold">HR</th>
+              <th class="py-2 font-semibold">Verdict & Guardrails</th>
+            </tr>
+          </thead>
+          <tbody id="synergyMatrixBody"></tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- STRATIFIED PRECISION ONCOLOGY DOSSIER -->
     <div id="recommendationsSection" class="hidden space-y-4">
       <div class="flex items-center justify-between">
@@ -268,6 +312,112 @@
       }
     }
 
+    function renderTimeline(timeline) {
+      if (!timeline || !timeline.lines) return;
+      document.getElementById("timelineSection").classList.remove("hidden");
+      document.getElementById("timelineSource").innerText =
+        `${timeline.source} · PMID ${timeline.pmid} · Patient ${timeline.patient_id}. Progression-free survival per line, with sequencing at each progression.`;
+      document.getElementById("timelineTotal").innerText = `${timeline.total_tki_months} mo`;
+      document.getElementById("timelineOs").innerText = `${timeline.overall_survival_months} mo`;
+
+      // Shared month axis spanning overall survival, so every line is drawn to the same scale.
+      const span = Math.max(timeline.overall_survival_months || 0, timeline.total_tki_months);
+      const pct = m => (m / span) * 100;
+      const chart = document.getElementById("timelineChart");
+      chart.innerHTML = "";
+
+      timeline.lines.forEach(line => {
+        const muts = line.mutations_at_progression.map(m => {
+          const isCis = m.variant.includes("in cis");
+          const isTrans = m.variant.includes("in trans");
+          const tone = isCis ? "border-rose-800 text-rose-300" : isTrans ? "border-amber-800 text-amber-300" : "border-slate-700 text-slate-300";
+          return `<span class="px-1.5 py-0.5 rounded bg-slate-950 border ${tone}">${m.variant}${m.vaf_pct != null ? ` · ${m.vaf_pct}%` : ""}</span>`;
+        }).join(" ");
+
+        const row = document.createElement("div");
+        row.className = "flex flex-col md:flex-row md:items-start gap-2";
+        row.innerHTML = `
+          <div class="md:w-56 shrink-0">
+            <div class="text-[11px] mono text-slate-400">LINE ${line.line} · ${line.best_response}</div>
+            <div class="text-xs font-semibold text-white">${line.regimen}</div>
+          </div>
+          <div class="flex-1 space-y-1.5">
+            <div class="relative h-6 rounded bg-slate-950 border border-slate-800">
+              <div class="absolute top-1 bottom-1 rounded bg-cyan-500/80 hover:bg-cyan-400 cursor-default"
+                   style="left: calc(${pct(line.start_month)}% + 1px); width: calc(${pct(line.pfs_months)}% - 2px);"
+                   title="Line ${line.line}: ${line.regimen}\nMonths ${line.start_month}–${line.end_month} (PFS ${line.pfs_months} mo)\n${line.generation}\nProgression: ${line.progression_event}"></div>
+              <span class="absolute top-1 text-[10px] mono text-slate-300 pl-1.5" style="left: ${pct(line.end_month)}%;">${line.pfs_months} mo</span>
+            </div>
+            <div class="text-[11px] text-slate-400"><span class="text-slate-500">Progression:</span> ${line.progression_event}</div>
+            ${muts ? `<div class="flex flex-wrap gap-1 text-[10px] mono">${muts}</div>` : ""}
+          </div>
+        `;
+        chart.appendChild(row);
+      });
+
+      const axis = document.getElementById("timelineAxis");
+      axis.innerHTML = "";
+      for (let m = 0; m <= span; m += 6) {
+        axis.innerHTML += `<span class="absolute top-1 -translate-x-1/2" style="left: ${pct(m)}%;">${m}</span>`;
+      }
+    }
+
+    function renderSynergyMatrix(regimens) {
+      if (!regimens || !regimens.length) return;
+      document.getElementById("synergySection").classList.remove("hidden");
+      const body = document.getElementById("synergyMatrixBody");
+      body.innerHTML = "";
+
+      // Shared CI axis 0–1.5 with the additive band (0.9–1.1) marked, so pairs compare directly.
+      const ciMax = 1.5;
+      const pct = v => Math.min(v / ciMax, 1) * 100;
+
+      regimens.forEach(r => {
+        const antagonistic = r.combination_index > 1.1;
+        const status = r.is_synergistic
+          ? `<span class="text-emerald-400 font-semibold">✓ ${r.category}</span>`
+          : antagonistic
+            ? `<span class="text-rose-400 font-semibold">✕ ${r.category}</span>`
+            : `<span class="text-amber-400 font-semibold">≈ ${r.category}</span>`;
+        const barColor = r.is_synergistic ? "bg-emerald-500" : antagonistic ? "bg-rose-500" : "bg-amber-500";
+        const fmt = (v, unit = "") => v == null ? "—" : `${v}${unit}`;
+        const guardrails = (r.guardrails || []).map(g => `<div class="mt-1 text-[11px] text-amber-300/90">⚠ ${g}</div>`).join("");
+
+        const tr = document.createElement("tr");
+        tr.className = "border-b border-slate-800/60 align-top hover:bg-slate-800/30";
+        tr.innerHTML = `
+          <td class="py-3 pr-4">
+            <div class="font-semibold text-white">${r.regimen}</div>
+            <div class="text-[11px] text-slate-400 mono">${r.trial}</div>
+          </td>
+          <td class="py-3 pr-4 text-slate-300">
+            <div>${r.drug_1}</div><div class="text-slate-500">×</div><div>${r.drug_2}</div>
+            <div class="mt-1 text-[11px] text-slate-500">${r.target}</div>
+          </td>
+          <td class="py-3 pr-4">
+            <div class="flex items-center justify-between mb-1 mono">
+              <span class="text-base font-bold text-white">${r.combination_index}</span>
+            </div>
+            <div class="relative h-2.5 rounded bg-slate-950 border border-slate-800" title="CI ${r.combination_index}: ${r.category}">
+              <div class="absolute top-0 bottom-0 bg-slate-700/60" style="left: ${pct(0.9)}%; width: ${pct(1.1) - pct(0.9)}%;"></div>
+              <div class="absolute top-0 bottom-0 left-0 rounded ${barColor}" style="width: ${pct(r.combination_index)}%;"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-slate-500 mono mt-0.5"><span>0</span><span>0.9</span><span>1.5</span></div>
+            <div class="mt-1 text-[11px]">${status}</div>
+          </td>
+          <td class="py-3 pr-4 mono text-slate-200">${fmt(r.median_pfs_months, " mo")}</td>
+          <td class="py-3 pr-4 mono text-slate-200">${fmt(r.orr_pct, "%")}</td>
+          <td class="py-3 pr-4 mono text-slate-200">${fmt(r.hazard_ratio)}</td>
+          <td class="py-3 text-slate-300">
+            <div class="mono text-[11px] text-slate-200">${r.verdict.replace(/_/g, " ")}</div>
+            ${r.rationale ? `<div class="mt-1 text-[11px] text-slate-400">${r.rationale}</div>` : ""}
+            ${guardrails}
+          </td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
     async function triggerAnalysis() {
       const btn = document.getElementById("runAnalysisBtn");
       const consoleEl = document.getElementById("agentTraceConsole");
@@ -305,6 +455,9 @@
         document.getElementById("metricPkd").innerText = data.fusion_telemetry.predicted_pkd;
         document.getElementById("metricDeltaG").innerText = data.fusion_telemetry.predicted_delta_g_kcal_mol + " kcal/mol";
         document.getElementById("metricAlignment").innerText = data.fusion_telemetry.alignment_metrics.vision_chemistry_alignment;
+
+        renderTimeline(data.longitudinal_timeline);
+        renderSynergyMatrix(data.combination_synergy);
 
         // Show Drug Rankings
         const recSection = document.getElementById("recommendationsSection");
