@@ -45,6 +45,16 @@ def health():
     return jsonify({"status": "healthy", "service": "OmniBio-Agent", "version": "1.0.0"})
 
 
+@app.route("/api/visium", methods=["GET"])
+def get_visium_overlay():
+    """Returns the 10x Genomics Visium spatial transcriptomics spots."""
+    visium_file = os.path.join(BASE_DIR, "data", "visium_luad_overlay.json")
+    if os.path.exists(visium_file):
+        with open(visium_file, "r", encoding="utf-8") as f:
+            return jsonify(json.load(f))
+    return jsonify({"error": "visium data not found"}), 404
+
+
 if __name__ == "__main__":
     print("\n=======================================================")
     print("   OmniBio-Agent: Multimodal Precision Oncology Copilot")

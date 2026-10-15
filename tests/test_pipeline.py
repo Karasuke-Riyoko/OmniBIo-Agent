@@ -121,6 +121,21 @@ class TestOmniBioAgent(unittest.TestCase):
         self.assertTrue(any("C797S (in trans)" in m["variant"] for m in timeline["lines"][1]["mutations_at_progression"]))
         self.assertTrue(any("C797S (in cis)" in m["variant"] for m in timeline["lines"][2]["mutations_at_progression"]))
 
+    def test_visium_spatial_endpoint(self):
+        """Verifies /api/visium serves the LDV Labs 10x Visium overlay the Modality 1 toggle renders."""
+        from app import app
+        response = app.test_client().get("/api/visium")
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+
+        self.assertIn("escape_threshold", data)
+        self.assertTrue(data["spots"])
+        for spot in data["spots"]:
+            for key in ("barcode", "pxl_x", "pxl_y", "escape_score", "expression_log2_umi"):
+                self.assertIn(key, spot)
+            self.assertTrue(0.0 <= spot["escape_score"] <= 1.0)
+        self.assertTrue(any(s["escape_score"] >= data["escape_threshold"] for s in data["spots"]))
+
 
 if __name__ == "__main__":
     unittest.main()

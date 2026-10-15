@@ -12,6 +12,13 @@
     .mono { font-family: 'JetBrains Mono', monospace; }
     .glow-cyan { box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.3); }
     .glow-emerald { box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.3); }
+    .glow-pink { box-shadow: 0 0 25px -5px rgba(236, 72, 153, 0.3); }
+    @keyframes spotPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.9; } }
+    .visium-halo { animation: spotPulse 2.4s ease-in-out infinite; }
+    .visium-spot { cursor: pointer; transition: stroke-width 0.15s; }
+    .visium-spot:hover, .visium-spot.selected { stroke: #f8fafc; stroke-width: 1.5; }
+    @keyframes micPulse { 0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.6); } 100% { box-shadow: 0 0 0 14px rgba(244, 63, 94, 0); } }
+    .mic-live { animation: micPulse 1.2s ease-out infinite; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen">
@@ -74,11 +81,14 @@
             <h3 class="text-sm font-bold uppercase tracking-wider text-cyan-400 flex items-center space-x-2">
               <span>🔬 Modality 1: Histology & Stroma</span>
             </h3>
-            <span class="text-xs text-slate-400 mono">TCGA-LUAD</span>
+            <button id="visiumToggleBtn" onclick="toggleVisium()" aria-pressed="false" title="LDV Labs 10x Visium spatial multi-omics overlay"
+                    class="px-2 py-0.5 rounded text-[11px] mono border border-slate-700 bg-slate-800 text-slate-400 hover:text-pink-300 transition-colors">
+              Visium ST: OFF
+            </button>
           </div>
-          <p class="text-xs text-slate-400 mb-3">Spatial Perceiver Resampler compresses patches into M=64 morphological latents.</p>
-          
-          <div class="relative w-full h-56 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center">
+          <p id="histologyCaption" class="text-xs text-slate-400 mb-3">Spatial Perceiver Resampler compresses patches into M=64 morphological latents.</p>
+
+          <div id="histologyPanel" class="relative w-full h-56 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center">
             <svg class="w-full h-full opacity-70" viewBox="0 0 200 200">
               <defs>
                 <radialGradient id="desmoplasiaGlow" cx="50%" cy="50%" r="50%">
@@ -97,9 +107,12 @@
               <circle cx="55" cy="65" r="14" fill="#ec4899" opacity="0.75"/>
               <circle cx="145" cy="135" r="16" fill="#ef4444" opacity="0.8"/>
             </svg>
+            <!-- LDV Labs 10x Visium spot layer (populated from /api/visium) -->
+            <svg id="visiumLayer" class="hidden absolute inset-0 w-full h-full" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet"></svg>
+            <div id="visiumSpotCard" class="hidden absolute top-2 right-2 w-40 bg-slate-950/90 backdrop-blur px-2 py-1.5 rounded border border-slate-800 text-[10px] mono pointer-events-none"></div>
             <div class="absolute bottom-2 left-2 right-2 bg-slate-950/90 backdrop-blur px-2.5 py-1.5 rounded border border-slate-800 text-[11px] mono flex justify-between">
               <span id="desmoplasiaLabel" class="text-rose-400">Desmoplasia: 68.0%</span>
-              <span class="text-amber-400">TIL: Immune-Excluded</span>
+              <span id="histologyStatusLabel" class="text-amber-400">TIL: Immune-Excluded</span>
             </div>
           </div>
         </div>
@@ -176,6 +189,62 @@
         </div>
       </div>
 
+    </div>
+
+    <!-- AUGLI.AI CLINICIAN VOICE COPILOT -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 glow-pink">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+        <div>
+          <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+            <span>🎙️ Augli.ai Clinician Voice Copilot</span>
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">Say "show me the gatekeeper" or "why did this residue stop binding?" — deictic references resolve to EGFR residues and fly the Modality 2 camera there.</p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <label class="flex items-center gap-1.5 text-[11px] text-slate-400 mono cursor-pointer">
+            <input id="voiceSpeakToggle" type="checkbox" class="accent-pink-500" checked> Read aloud
+          </label>
+          <button id="voiceMicBtn" onclick="toggleVoiceListening()" class="w-11 h-11 rounded-full bg-pink-500 hover:bg-pink-400 text-slate-950 flex items-center justify-center shadow-lg shadow-pink-500/20 transition-colors" title="Start voice query">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-14 0m7 7v3m0 0H8m4 0h4m-4-7a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick simulation chips (no microphone needed) -->
+      <div class="flex flex-wrap items-center gap-2 mb-4">
+        <span class="text-[11px] uppercase tracking-wider text-slate-500 mr-1">Simulate:</span>
+        <button onclick="simulateVoiceQuery('c797s')" class="px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 border border-rose-800 text-rose-300 text-[11px] mono">"Why does C797S block Osimertinib?"</button>
+        <button onclick="simulateVoiceQuery('cys797')" class="px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 border border-emerald-800 text-emerald-300 text-[11px] mono">"Show me the Cys797 warhead site"</button>
+        <button onclick="simulateVoiceQuery('t790m')" class="px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 border border-amber-800 text-amber-300 text-[11px] mono">"Zoom to the T790M gatekeeper"</button>
+        <button onclick="simulateVoiceQuery('allosteric')" class="px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 border border-purple-800 text-purple-300 text-[11px] mono">"Where would an allosteric drug bind?"</button>
+        <button onclick="simulateVoiceQuery('savolitinib')" class="px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 border border-cyan-800 text-cyan-300 text-[11px] mono">"Is Savolitinib worth adding here?"</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-3">
+          <div class="bg-slate-950 rounded-xl border border-slate-800 p-3">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] uppercase tracking-wider text-slate-500">Clinician Utterance</span>
+              <span id="voiceStatus" class="text-[10px] mono text-slate-500">Idle</span>
+            </div>
+            <div id="voiceTranscript" class="text-sm text-slate-300 italic min-h-[1.5rem]">—</div>
+            <form onsubmit="event.preventDefault(); submitTypedQuery();" class="mt-2 flex gap-2">
+              <input id="voiceTextInput" type="text" placeholder="…or type a question and press Enter" class="flex-1 bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-pink-700">
+            </form>
+          </div>
+          <div class="bg-slate-950 rounded-xl border border-slate-800 p-3">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[10px] uppercase tracking-wider text-slate-500">Copilot Response · Clinician</span>
+              <span id="voiceResolvedTarget" class="text-[10px] mono text-pink-400"></span>
+            </div>
+            <div id="voiceResponse" class="text-xs text-slate-300 leading-relaxed">Ask about a residue, mutation, or drug to begin.</div>
+          </div>
+        </div>
+        <div class="bg-slate-950 rounded-xl border border-emerald-900/60 p-3">
+          <div class="text-[10px] uppercase tracking-wider text-emerald-500 mb-1">Patient Lay Summary · Plain Language</div>
+          <div id="voiceLaySummary" class="text-sm text-slate-200 leading-relaxed">A plain-language explanation for the patient will appear here.</div>
+        </div>
+      </div>
     </div>
 
     <!-- PURPLERAIN REASONING TERMINAL -->
@@ -287,11 +356,14 @@
 
   <script>
     let viewerInstance = null;
+    let viewerReady = false;
+    let pendingFocus = null;
 
     function loadPdb(pdbId, title) {
       document.getElementById("activePdbLabel").innerText = title;
       const element = document.getElementById("pdbViewer");
       element.innerHTML = "";
+      viewerReady = false;
       try {
         viewerInstance = $3Dmol.createViewer(element, { defaultcolors: $3Dmol.rasmolElementColors });
         $3Dmol.download("pdb:" + pdbId, viewerInstance, {}, function() {
@@ -299,7 +371,14 @@
           viewerInstance.addSurface($3Dmol.SurfaceType.VDW, { opacity: 0.15, color: "cyan" });
           viewerInstance.zoomTo();
           viewerInstance.render();
-          viewerInstance.animate({ loop: "forward", reps: 0, step: 0.2 });
+          viewerReady = true;
+          // A voice query that arrived while the structure was downloading is applied now.
+          if (pendingFocus) {
+            focusResidues(pendingFocus);
+            pendingFocus = null;
+          } else {
+            viewerInstance.animate({ loop: "forward", reps: 0, step: 0.2 });
+          }
         });
       } catch (e) {
         element.innerHTML = `
@@ -310,6 +389,349 @@
           </div>
         `;
       }
+    }
+
+    // ---------------------------------------------------------------
+    // Augli.ai Clinician Voice Copilot
+    // ---------------------------------------------------------------
+
+    // Maps clinical phrases (including deictic references like "this residue",
+    // "the gatekeeper") to EGFR residues, a clinician answer and a patient lay summary.
+    // Entries are matched in insertion order, so specific drug names precede residue numbers.
+    const CLINICAL_DEICTIC_MAP = {
+      savolitinib: {
+        target: "Savolitinib · MET bypass",
+        patterns: [/savolitinib/, /\bmet\b/, /savannah/, /bypass/, /amplif/],
+        residues: [
+          { resi: 797, label: "C797 · Osimertinib anchor", color: "#22d3ee" },
+          { resi: 790, label: "T790M", color: "#f59e0b" }
+        ],
+        showVisium: true,
+        clinician: "Savolitinib is a selective MET TKI — it does not bind EGFR. Pairing it with Osimertinib (SAVANNAH, CI 0.38, strong synergy) is only justified for MET-driven bypass resistance. Caveat for this patient: with cis-C797S, Osimertinib has lost its Cys797 anchor, so the EGFR arm of the doublet is compromised. Confirm MET amplification by FISH/NGS first — the Visium overlay on Modality 1 shows MET-high escape niches.",
+        lay: "Savolitinib blocks a different growth signal, called MET, that some cancers switch to when the main medicine stops working. It only helps if tests show your tumour is relying on MET, so your doctors would check that before adding it."
+      },
+      allosteric: {
+        target: "Allosteric pocket · αC-helix",
+        patterns: [/allosteric/, /eai[\s-]*045/, /\bjbj\b/, /alpha[\s-]*c\b/, /αc/, /\b756\b/, /behind the/],
+        residues: [
+          { resi: 756, label: "756 · αC allosteric pocket rim", color: "#a855f7" }
+        ],
+        clinician: "Allosteric inhibitors (EAI045, JBJ-04-125-02) bind a pocket behind the αC-helix that opens in the αC-out inactive state (see 6Z4B in the ensemble). Binding does not depend on Cys797, so C797S does not confer resistance. Single-agent activity needs dimerization blockade (Cetuximab in preclinical models). Investigational only — trial enrolment route.",
+        lay: "Instead of plugging the main slot that has changed, some experimental medicines attach to a different spot on the side of the protein and jam it from behind. These are still being tested in clinical trials."
+      },
+      cys797: {
+        target: "Cys797 · covalent warhead site",
+        patterns: [/\bcys(teine)?[\s-]*797\b/, /covalent/, /warhead/, /michael/, /anchor/, /where (does|do) (osimertinib|it|the drug) (bind|attach)/],
+        residues: [
+          { resi: 797, label: "Cys797 · covalent anchor", color: "#10b981" }
+        ],
+        clinician: "Cys797 sits at the solvent front of the ATP cleft. Osimertinib's acrylamide warhead forms an irreversible C–S Michael adduct with its thiol (PDB 4ZAU). Losing this anchor (C797S) is the dominant on-target resistance mechanism to 3rd-Gen TKIs.",
+        lay: "This is the exact spot where your medicine, Osimertinib, attaches to the cancer's growth switch — like a key that clicks into a lock and stays there."
+      },
+      c797s: {
+        target: "C797S · Ser797 (cis with T790M)",
+        patterns: [/\bc[\s-]*797[\s-]*s\b/, /\bser(ine)?[\s-]*797\b/, /\bc[\s-]*797\b/, /\b797\b/, /seven ninety[\s-]*seven/, /\bcis\b/, /\btrans\b/, /stop(ped)? (binding|working)/, /resistan/],
+        residues: [
+          { resi: 797, label: "C797S · Ser797", color: "#f43f5e" },
+          { resi: 790, label: "T790M (same allele)", color: "#f59e0b" }
+        ],
+        clinician: "C797S swaps the Cys797 thiol for a far less nucleophilic serine hydroxyl, so Osimertinib can no longer form its covalent bond and potency falls >100-fold. In this patient it is in cis with T790M (same allele), so 1st- + 3rd-Gen combinations are antagonistic (CI > 1.1). Prioritise 4th-Gen reversible inhibitors such as BLU-945, or a clinical trial.",
+        lay: "Your cancer changed one tiny building block in its growth-switch protein. Your current pill used to lock onto that exact spot; after the change it can't grip anymore, so it stops working. Because both changes sit on the same copy of the gene, combining your older pills won't help — your team is looking at newer drugs designed for this."
+      },
+      t790m: {
+        target: "T790M · gatekeeper",
+        patterns: [/\bt[\s-]*790[\s-]*m?\b/, /\b790\b/, /seven ninety\b/, /gatekeeper/, /methionine/],
+        residues: [
+          { resi: 790, label: "T790M · gatekeeper", color: "#f59e0b" }
+        ],
+        clinician: "T790M replaces the threonine gatekeeper at the back of the ATP cleft with a bulkier methionine, raising ATP affinity and sterically blocking 1st/2nd-Gen TKIs (Gefitinib, Erlotinib). It emerged here after Gefitinib; Osimertinib overcomes it by covalently anchoring at Cys797.",
+        lay: "This is the 'gatekeeper' spot. It changed after your first medicine, which made that pill stop fitting well — that's why you were switched to Osimertinib."
+      }
+    };
+
+    const DEICTIC_PATTERN = /\b(this|that|it|here|there|same|again|those|these)\b/;
+    let lastVoiceIntent = null;
+    let speechRecognizer = null;
+    let voiceListening = false;
+
+    function resolveClinicalIntent(utterance) {
+      const text = utterance.toLowerCase();
+      for (const [key, entry] of Object.entries(CLINICAL_DEICTIC_MAP)) {
+        if (entry.patterns.some(p => p.test(text))) return { key, via: "keyword" };
+      }
+      // Pure deictic follow-ups ("zoom in on that again") resolve to the last focused target.
+      if (lastVoiceIntent && DEICTIC_PATTERN.test(text)) return { key: lastVoiceIntent, via: "deictic" };
+      return null;
+    }
+
+    function focusResidues(entry) {
+      if (!viewerInstance || !viewerReady) {
+        pendingFocus = entry;
+        return [];
+      }
+      const v = viewerInstance;
+      if (v.stopAnimate) v.stopAnimate();
+      v.removeAllLabels();
+      v.setStyle({}, { cartoon: { color: "spectrum" } });
+
+      const missing = [];
+      let chain = null;
+      const resis = [];
+      entry.residues.forEach(r => {
+        const atoms = v.selectedAtoms(chain ? { resi: r.resi, chain, hetflag: false } : { resi: r.resi, hetflag: false });
+        if (!atoms.length) { missing.push(r.resi); return; }
+        chain = chain || atoms[0].chain;
+        resis.push(r.resi);
+        v.addStyle({ resi: r.resi, chain }, { stick: { color: r.color, radius: 0.3 } });
+        const anchor = atoms.find(a => a.atom === "CA") || atoms[0];
+        v.addLabel(r.label, {
+          position: { x: anchor.x, y: anchor.y, z: anchor.z },
+          backgroundColor: "#0f172a", backgroundOpacity: 0.85,
+          fontColor: r.color, fontSize: 11, borderColor: r.color, borderThickness: 1, inFront: true
+        });
+      });
+
+      if (resis.length) {
+        // Frame the residue neighbourhood (8 Å shell) rather than the bare side chain.
+        v.zoomTo({ within: { distance: 8, sel: { resi: resis, chain } } }, 1200);
+      }
+      v.render();
+      return missing;
+    }
+
+    function speak(text) {
+      if (!document.getElementById("voiceSpeakToggle").checked || !window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-US";
+      window.speechSynthesis.speak(u);
+    }
+
+    function handleClinicianQuery(utterance) {
+      document.getElementById("voiceTranscript").innerText = `"${utterance}"`;
+      const responseEl = document.getElementById("voiceResponse");
+      const layEl = document.getElementById("voiceLaySummary");
+      const targetEl = document.getElementById("voiceResolvedTarget");
+
+      const intent = resolveClinicalIntent(utterance);
+      if (!intent) {
+        targetEl.innerText = "unresolved";
+        responseEl.innerText = "I couldn't map that to a residue or drug. Try \"C797S\", \"the gatekeeper\", \"Cys797\", \"allosteric pocket\" or \"Savolitinib\".";
+        return;
+      }
+
+      lastVoiceIntent = intent.key;
+      const entry = CLINICAL_DEICTIC_MAP[intent.key];
+      const missing = focusResidues(entry);
+      const pdb = document.getElementById("activePdbLabel").innerText.split(" ")[0];
+
+      targetEl.innerText = `→ ${entry.target}${intent.via === "deictic" ? " (deictic)" : ""}`;
+      responseEl.innerText = entry.clinician +
+        (missing.length ? ` [Residue ${missing.join(", ")} is not resolved in ${pdb}; try another structure in the ensemble.]` : "");
+      layEl.innerText = entry.lay;
+      if (entry.showVisium && !visiumOn) toggleVisium();
+      speak(entry.clinician);
+    }
+
+    function simulateVoiceQuery(key) {
+      const samples = {
+        c797s: "Why does C797S block Osimertinib?",
+        cys797: "Show me the Cys797 warhead site",
+        t790m: "Zoom to the T790M gatekeeper",
+        allosteric: "Where would an allosteric drug bind?",
+        savolitinib: "Is Savolitinib worth adding here?"
+      };
+      handleClinicianQuery(samples[key]);
+    }
+
+    function submitTypedQuery() {
+      const input = document.getElementById("voiceTextInput");
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = "";
+      handleClinicianQuery(text);
+    }
+
+    function setVoiceStatus(text, live) {
+      document.getElementById("voiceStatus").innerText = text;
+      document.getElementById("voiceMicBtn").classList.toggle("mic-live", !!live);
+    }
+
+    function initVoiceCopilot() {
+      const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const micBtn = document.getElementById("voiceMicBtn");
+      if (!Recognition) {
+        micBtn.disabled = true;
+        micBtn.classList.add("opacity-40", "cursor-not-allowed");
+        micBtn.title = "Web Speech API not supported in this browser — use the chips or type a question";
+        setVoiceStatus("Mic unsupported · use chips");
+        return;
+      }
+      speechRecognizer = new Recognition();
+      speechRecognizer.lang = "en-US";
+      speechRecognizer.interimResults = true;
+      speechRecognizer.continuous = false;
+
+      speechRecognizer.onresult = event => {
+        let interim = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            handleClinicianQuery(transcript.trim());
+          } else {
+            interim += transcript;
+          }
+        }
+        if (interim) document.getElementById("voiceTranscript").innerText = interim + "…";
+      };
+      speechRecognizer.onerror = event => setVoiceStatus(`Mic error: ${event.error}`);
+      speechRecognizer.onend = () => {
+        voiceListening = false;
+        if (document.getElementById("voiceStatus").innerText === "Listening…") setVoiceStatus("Idle");
+        else document.getElementById("voiceMicBtn").classList.remove("mic-live");
+      };
+    }
+
+    function toggleVoiceListening() {
+      if (!speechRecognizer) return;
+      if (voiceListening) {
+        speechRecognizer.stop();
+        return;
+      }
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      try {
+        speechRecognizer.start();
+        voiceListening = true;
+        setVoiceStatus("Listening…", true);
+      } catch (e) {
+        setVoiceStatus("Mic busy");
+      }
+    }
+
+    // ---------------------------------------------------------------
+    // LDV Labs 10x Visium Spatial Multi-Omics overlay (Modality 1)
+    // ---------------------------------------------------------------
+
+    let visiumData = null;
+    let visiumOn = false;
+    const HISTOLOGY_CAPTION = "Spatial Perceiver Resampler compresses patches into M=64 morphological latents.";
+
+    function escapeColor(score, threshold) {
+      if (score >= threshold) return "#f43f5e";
+      if (score >= 0.5) return "#f59e0b";
+      return "#22d3ee";
+    }
+
+    function setVisiumButton() {
+      const btn = document.getElementById("visiumToggleBtn");
+      btn.setAttribute("aria-pressed", String(visiumOn));
+      btn.innerText = visiumOn ? "Visium ST: ON" : "Visium ST: OFF";
+      btn.className = visiumOn
+        ? "px-2 py-0.5 rounded text-[11px] mono border border-pink-700 bg-pink-950 text-pink-300 transition-colors"
+        : "px-2 py-0.5 rounded text-[11px] mono border border-slate-700 bg-slate-800 text-slate-400 hover:text-pink-300 transition-colors";
+    }
+
+    function hideVisium() {
+      document.getElementById("visiumLayer").classList.add("hidden");
+      document.getElementById("visiumSpotCard").classList.add("hidden");
+      document.getElementById("histologyCaption").innerText = HISTOLOGY_CAPTION;
+      const status = document.getElementById("histologyStatusLabel");
+      status.className = "text-amber-400";
+      status.innerText = "TIL: Immune-Excluded";
+    }
+
+    async function toggleVisium() {
+      visiumOn = !visiumOn;
+      setVisiumButton();
+      if (!visiumOn) {
+        hideVisium();
+        return;
+      }
+
+      const status = document.getElementById("histologyStatusLabel");
+
+      if (!visiumData) {
+        status.innerText = "Fetching Visium spots…";
+        try {
+          const response = await fetch("/api/visium");
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          visiumData = await response.json();
+        } catch (err) {
+          console.error(err);
+          visiumOn = false;
+          setVisiumButton();
+          hideVisium();
+          status.className = "text-rose-400";
+          status.innerText = "Visium data unavailable";
+          return;
+        }
+        // The user may have toggled off while the request was in flight.
+        if (!visiumOn) return;
+      }
+      renderVisium();
+    }
+
+    function renderVisium() {
+      const { spots, escape_threshold: threshold, platform, normalization } = visiumData;
+      const layer = document.getElementById("visiumLayer");
+
+      // Fit spot pixel coordinates into the 200×200 histology viewBox with a uniform
+      // scale, keeping clear of the bottom status bar.
+      const xs = spots.map(s => s.pxl_x), ys = spots.map(s => s.pxl_y);
+      const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+      const scale = Math.min(130 / Math.max(maxX - minX, 1), 115 / Math.max(maxY - minY, 1));
+      const offX = 100 - ((maxX - minX) * scale) / 2, offY = 90 - ((maxY - minY) * scale) / 2;
+      const project = s => [offX + (s.pxl_x - minX) * scale, offY + (s.pxl_y - minY) * scale];
+
+      let svg = `<defs><filter id="spotGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3.5"/></filter></defs>
+        <rect width="200" height="200" fill="#020617" opacity="0.45"/>`;
+      spots.forEach((s, i) => {
+        const [x, y] = project(s);
+        const color = escapeColor(s.escape_score, threshold);
+        const [topGene, topUmi] = Object.entries(s.expression_log2_umi).sort((a, b) => b[1] - a[1])[0];
+        svg += `
+          <circle cx="${x}" cy="${y}" r="15" fill="${color}" filter="url(#spotGlow)" class="${s.escape_score >= threshold ? "visium-halo" : ""}" opacity="0.45"/>
+          <circle cx="${x}" cy="${y}" r="7.5" fill="${color}" fill-opacity="0.85" class="visium-spot" data-idx="${i}"
+                  onmouseenter="selectVisiumSpot(${i})" onclick="selectVisiumSpot(${i})"><title>${s.barcode} · escape ${s.escape_score}</title></circle>
+          <text x="${x}" y="${y + 15}" text-anchor="middle" font-size="6" font-family="JetBrains Mono, monospace" fill="#e2e8f0">${topGene} ${topUmi.toFixed(2)}</text>`;
+      });
+      layer.innerHTML = svg;
+      layer.classList.remove("hidden");
+
+      const escaping = spots.filter(s => s.escape_score >= threshold).length;
+      document.getElementById("histologyCaption").innerText = `${platform} · ${normalization}`;
+      const status = document.getElementById("histologyStatusLabel");
+      status.className = "text-pink-400";
+      status.innerText = `Escape ≥${threshold}: ${escaping}/${spots.length} spots`;
+
+      // Open on the highest-escape spot so the most actionable niche is visible first.
+      const worst = spots.reduce((best, s, i) => (s.escape_score > spots[best].escape_score ? i : best), 0);
+      selectVisiumSpot(worst);
+    }
+
+    function selectVisiumSpot(idx) {
+      const s = visiumData.spots[idx];
+      const threshold = visiumData.escape_threshold;
+      const color = escapeColor(s.escape_score, threshold);
+      document.querySelectorAll("#visiumLayer .visium-spot").forEach(el =>
+        el.classList.toggle("selected", Number(el.dataset.idx) === idx));
+
+      // log2(UMI+1) bars on a shared 0–10 scale so genes compare across spots.
+      const bars = Object.entries(s.expression_log2_umi).map(([gene, v]) => `
+        <div class="flex items-center gap-1">
+          <span class="w-9 text-slate-400">${gene}</span>
+          <div class="flex-1 h-1.5 rounded bg-slate-800"><div class="h-full rounded" style="width:${Math.min(v / 10, 1) * 100}%; background:${color};"></div></div>
+          <span class="w-7 text-right text-slate-200">${v.toFixed(2)}</span>
+        </div>`).join("");
+
+      const card = document.getElementById("visiumSpotCard");
+      card.innerHTML = `
+        <div class="flex justify-between mb-0.5"><span class="text-slate-500">${s.barcode}</span></div>
+        <div class="font-bold" style="color:${color};">Escape ${s.escape_score.toFixed(2)} · ${s.alert_status.replace(/_/g, " ")}</div>
+        <div class="text-slate-400 leading-tight mb-1">${s.histology_niche}</div>
+        <div class="text-slate-500 mb-0.5">log2 UMI · cellularity ${Math.round(s.tumor_cellularity * 100)}%</div>
+        <div class="space-y-0.5">${bars}</div>`;
+      card.classList.remove("hidden");
     }
 
     function renderTimeline(timeline) {
@@ -535,6 +957,7 @@
 
     window.addEventListener("DOMContentLoaded", function() {
       loadPdb("4ZAU", "4ZAU (EGFR + Osimertinib Covalent)");
+      initVoiceCopilot();
     });
   </script>
 </body>
