@@ -351,14 +351,35 @@
     // 1M17 uses the older mature-protein numbering: Cys773 there is Cys797 in the precursor numbering used elsewhere.
     const RESIDUE_OFFSET = { "1M17": -24 };
 
+    // Slow idle rotation, one rotate() per animation frame at most every 40 ms so slow GPUs are not flooded.
+    // (viewer.animate() plays trajectory frames, which wipes a single-frame model, so it is not used.)
+    let spinFrame = null;
+    function startIdleSpin() {
+      stopIdleSpin();
+      let last = performance.now();
+      const tick = now => {
+        if (viewerInstance && viewerReady && now - last >= 40) {
+          viewerInstance.rotate(0.5 * (now - last) / 40, "y");
+          last = now;
+        }
+        spinFrame = requestAnimationFrame(tick);
+      };
+      spinFrame = requestAnimationFrame(tick);
+    }
+    function stopIdleSpin() {
+      if (spinFrame) cancelAnimationFrame(spinFrame);
+      spinFrame = null;
+    }
+
     function loadPdb(pdbId, title) {
       currentPdb = pdbId;
+      stopIdleSpin();
       document.getElementById("activePdbLabel").innerText = title;
       const element = document.getElementById("pdbViewer");
       element.innerHTML = "";
       viewerReady = false;
       try {
-        viewerInstance = $3Dmol.createViewer(element, { defaultcolors: $3Dmol.rasmolElementColors });
+        viewerInstance = $3Dmol.createViewer(element, { defaultcolors: $3Dmol.rasmolElementColors, backgroundColor: "#020617" });
         const viewer = viewerInstance;
         const onLoaded = function() {
           viewerInstance.setStyle({}, { cartoon: { color: "spectrum" } });
@@ -371,14 +392,21 @@
             focusResidues(pendingFocus);
             pendingFocus = null;
           } else {
-            viewerInstance.animate({ loop: "forward", reps: 0, step: 0.2 });
+            startIdleSpin();
           }
         };
         // Prefer the copy cached in data/pdb (works offline); fall back to RCSB.
         fetch(`/api/pdb/${pdbId}`)
-          .then(r => r.ok ? r.text() : Promise.reject(new Error("not cached")))
-          .then(text => { if (viewer !== viewerInstance) return; viewer.addModel(text, "pdb"); onLoaded(); })
-          .catch(() => { if (viewer === viewerInstance) $3Dmol.download("pdb:" + pdbId, viewer, {}, onLoaded); });
+          .then(r => (r.ok ? r.text() : null), () => null)
+          .then(text => {
+            if (viewer !== viewerInstance) return;  // another structure was requested meanwhile
+            if (text) {
+              viewer.addModel(text, "pdb");
+              onLoaded();
+            } else {
+              $3Dmol.download("pdb:" + pdbId, viewer, {}, onLoaded);
+            }
+          });
       } catch (e) {
         element.innerHTML = `
           <div class="text-center p-4 mono text-xs text-emerald-400">
@@ -469,7 +497,7 @@
         return [];
       }
       const v = viewerInstance;
-      if (v.stopAnimate) v.stopAnimate();
+      stopIdleSpin();
       v.removeAllLabels();
       v.setStyle({}, { cartoon: { color: "spectrum" } });
 

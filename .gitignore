@@ -22,3 +22,4 @@ bridge/
 .idea/
 .DS_Store
 Thumbs.db
+data/histology/uploaded_he_tile.png
