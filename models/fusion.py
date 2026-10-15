@@ -6,8 +6,13 @@ Upgraded with Gemini 4 Argon's mathematical formulations for the Multimodal AI H
 Solves:
 1. Softmax Dilution (Attention Sink): Compresses N_vis (1,000-15,000 patches) -> M=64 latent queries
 2. Gradient Imbalance: Decoupled tanh-gated Cross-Attention between Morpological Latents & Chemical Graphs
-3. Thermodynamic Free Energy & Multi-Task Loss Formulations (Huber + InfoNCE + MMM)
+
+Weights are seeded random initialisations: the architecture runs end to end on real inputs (H&E patch tokens,
+SMILES features, clinical text), but it has not been trained, so its outputs are shapes, gates, attention
+statistics and timing, not predictions. Potency predictions come from services/affinity_model.py.
 """
+
+import time
 
 import numpy as np
 from typing import Dict, Any, Tuple
@@ -170,17 +175,11 @@ class DecoupledTanhGatedCrossAttention:
         # Mean pooled unified embedding
         unified_vec = np.mean(fused_tokens, axis=0)
 
-        # Thermodynamic pKd & Free Energy estimation (Delta G = -RT ln(10) * pKd)
-        # RT ln(10) ~ 1.364 kcal/mol at 298.15 K
         norm_val = float(np.linalg.norm(unified_vec))
-        pred_pkd = 7.5 + norm_val * 0.4
-        delta_g = -1.364 * pred_pkd
 
         return {
             "fused_vector": unified_vec.tolist(),
             "fused_vector_norm": round(norm_val, 4),
-            "predicted_pkd": round(pred_pkd, 2),
-            "predicted_delta_g_kcal_mol": round(delta_g, 2),
             "tanh_gates": {
                 "alpha_vis_raw": round(self.alpha_vis, 4),
                 "tanh_alpha_vis": round(gate_vis, 4),
@@ -208,6 +207,7 @@ class OmniBioFusionPipeline:
         self.w_chem_proj = np.random.randn(d_mol, d_shared) * np.sqrt(2.0 / d_mol)
 
     def execute_fusion(self, x_vis: np.ndarray, x_chem: np.ndarray, x_text: np.ndarray) -> Dict[str, Any]:
+        t0 = time.perf_counter()
         # Stage 1: Spatial Perceiver Compression (N_vis -> 64 latents)
         z_vis, perceiver_attn = self.perceiver.resample(x_vis)
 
@@ -222,7 +222,12 @@ class OmniBioFusionPipeline:
 
         # Stage 2: Decoupled tanh-Gated Cross-Attention
         fusion_out = self.gated_mha.fuse(h_clin, z_vis, h_chem)
-        fusion_out["perceiver_compression_ratio"] = f"{x_vis.shape[0]} patches -> {z_vis.shape[0]} latents"
+        fusion_out["perceiver_compression_ratio"] = f"{x_vis.shape[0]} → {z_vis.shape[0]}"
+        fusion_out["n_patches"] = int(x_vis.shape[0])
+        fusion_out["n_latents"] = int(z_vis.shape[0])
+        # Mean entropy of each latent's attention over patches, relative to uniform (1.0 = uniform).
+        p = np.clip(perceiver_attn, 1e-12, 1.0)
+        fusion_out["perceiver_attention_entropy_rel"] = round(float((-(p * np.log(p)).sum(-1)).mean() / np.log(p.shape[-1])), 4)
 
         # Cosine alignments
         u_mean = np.mean(h_clin, axis=0)
@@ -237,4 +242,6 @@ class OmniBioFusionPipeline:
             "chemistry_text_alignment": round(cos_sim(v_mean, u_mean), 4),
             "vision_chemistry_alignment": round(cos_sim(z_mean, v_mean), 4),
         }
+        fusion_out["fusion_latency_ms"] = round((time.perf_counter() - t0) * 1000.0, 2)
+        fusion_out["weights"] = "untrained (seeded initialisation)"
         return fusion_out

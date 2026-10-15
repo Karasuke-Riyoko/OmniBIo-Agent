@@ -81,43 +81,32 @@
             <h3 class="text-sm font-bold uppercase tracking-wider text-cyan-400 flex items-center space-x-2">
               <span>🔬 Modality 1: Histology & Stroma</span>
             </h3>
-            <button id="visiumToggleBtn" onclick="toggleVisium()" aria-pressed="false" title="LDV Labs 10x Visium spatial multi-omics overlay"
+            <button id="visiumToggleBtn" onclick="toggleVisium()" aria-pressed="false" title="LDV Labs spatial multi-omics overlay (simulated Visium spots)"
                     class="px-2 py-0.5 rounded text-[11px] mono border border-slate-700 bg-slate-800 text-slate-400 hover:text-pink-300 transition-colors">
               Visium ST: OFF
             </button>
           </div>
-          <p id="histologyCaption" class="text-xs text-slate-400 mb-3">Spatial Perceiver Resampler compresses patches into M=64 morphological latents.</p>
+          <p id="histologyCaption" class="text-xs text-slate-400 mb-3">Spatial Perceiver Resampler compresses H&E patches into M=64 morphological latents.</p>
 
           <div id="histologyPanel" class="relative w-full h-56 bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center">
-            <svg class="w-full h-full opacity-70" viewBox="0 0 200 200">
-              <defs>
-                <radialGradient id="desmoplasiaGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#ef4444" stop-opacity="0.85"/>
-                  <stop offset="60%" stop-color="#f59e0b" stop-opacity="0.4"/>
-                  <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.1"/>
-                </radialGradient>
-              </defs>
-              <rect width="200" height="200" fill="#0f172a"/>
-              <!-- Stroma fiber texture -->
-              <path d="M 0,40 Q 50,60 100,30 T 200,50" stroke="#475569" stroke-width="2" fill="none" opacity="0.6"/>
-              <path d="M 0,80 Q 70,110 130,80 T 200,95" stroke="#475569" stroke-width="2" fill="none" opacity="0.6"/>
-              <path d="M 0,140 Q 60,170 140,130 T 200,160" stroke="#475569" stroke-width="2" fill="none" opacity="0.6"/>
-              <!-- Tumor nests -->
-              <circle cx="100" cy="100" r="42" fill="url(#desmoplasiaGlow)"/>
-              <circle cx="55" cy="65" r="14" fill="#ec4899" opacity="0.75"/>
-              <circle cx="145" cy="135" r="16" fill="#ef4444" opacity="0.8"/>
-            </svg>
-            <!-- LDV Labs 10x Visium spot layer (populated from /api/visium) -->
-            <svg id="visiumLayer" class="hidden absolute inset-0 w-full h-full" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet"></svg>
-            <div id="visiumSpotCard" class="hidden absolute top-2 right-2 w-40 bg-slate-950/90 backdrop-blur px-2 py-1.5 rounded border border-slate-800 text-[10px] mono pointer-events-none"></div>
+            <img id="histologyImage" src="/api/histology/image" alt="H&E tile analysed by the Perceiver" class="absolute inset-0 w-full h-full object-cover">
+            <!-- LDV Labs Visium spot layer (populated from /api/visium) -->
+            <svg id="visiumLayer" class="hidden absolute inset-0 w-full h-full" viewBox="0 0 1024 1024" preserveAspectRatio="xMidYMid slice"></svg>
+            <div id="visiumSpotCard" class="hidden absolute top-2 right-2 w-44 bg-slate-950/90 backdrop-blur px-2 py-1.5 rounded border border-slate-800 text-[10px] mono pointer-events-none"></div>
             <div class="absolute bottom-2 left-2 right-2 bg-slate-950/90 backdrop-blur px-2.5 py-1.5 rounded border border-slate-800 text-[11px] mono flex justify-between">
-              <span id="desmoplasiaLabel" class="text-rose-400">Desmoplasia: 68.0%</span>
-              <span id="histologyStatusLabel" class="text-amber-400">TIL: Immune-Excluded</span>
+              <span id="desmoplasiaLabel" class="text-rose-400">Stroma: measuring…</span>
+              <span id="histologyStatusLabel" class="text-amber-400">Nuclei: —</span>
             </div>
+          </div>
+          <div class="mt-2 flex items-center justify-between gap-2 text-[10px] text-slate-500">
+            <span id="histologySource" class="truncate">Loading tile…</span>
+            <label class="shrink-0 cursor-pointer px-1.5 py-0.5 rounded border border-slate-700 hover:text-cyan-300">Upload H&E
+              <input id="histologyUpload" type="file" accept="image/*" class="hidden" onchange="uploadHistology(this)">
+            </label>
           </div>
         </div>
         <div class="mt-4 pt-3 border-t border-slate-800 text-xs text-slate-400 flex justify-between">
-          <span>Perceiver: 128 → 64 Latents</span>
+          <span id="perceiverFooter">Perceiver: patches → 64 Latents</span>
           <span class="text-emerald-400 font-semibold">O(M·N) Scaled</span>
         </div>
       </div>
@@ -267,7 +256,7 @@
       <div class="border-b border-slate-800 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h3 class="text-lg font-bold text-white">Gemini 4 Argon Mathematical Fusion & Thermodynamic Telemetry</h3>
-          <p class="text-xs text-slate-400 mt-0.5">Two-Stage Perceiver Resampler + Decoupled tanh-Gated MHA + Gibbs Free Energy $\Delta G = -RT \ln(10) \cdot \text{p}K_d$.</p>
+          <p class="text-xs text-slate-400 mt-0.5">Two-Stage Perceiver Resampler + Decoupled tanh-Gated MHA run on real inputs (H&E patch tokens, SMILES features, clinical text). Fusion weights are untrained; potency comes from the ChEMBL-trained model.</p>
         </div>
         <div class="flex space-x-2">
           <span class="px-2.5 py-1 rounded bg-slate-800 border border-slate-700 text-xs mono text-cyan-400">tanh(α_vis): <span id="gateVis">0.05</span></span>
@@ -278,23 +267,23 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
           <div class="text-[11px] text-slate-400 uppercase tracking-wider mb-1">Perceiver Compression</div>
-          <div id="metricCompression" class="text-xl font-bold text-cyan-400 mono">128 → 64</div>
-          <div class="text-[11px] text-slate-500 mt-1">Eliminates Softmax Dilution</div>
+          <div id="metricCompression" class="text-xl font-bold text-cyan-400 mono">-- → 64</div>
+          <div class="text-[11px] text-slate-500 mt-1">Real H&E patch tokens → latents</div>
         </div>
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
-          <div class="text-[11px] text-slate-400 uppercase tracking-wider mb-1">Predicted pKd</div>
-          <div id="metricPkd" class="text-xl font-bold text-emerald-400 mono">--</div>
-          <div class="text-[11px] text-slate-500 mt-1">Multi-task Huber calibration</div>
+          <div class="text-[11px] text-slate-400 uppercase tracking-wider mb-1">Fusion Latency (measured)</div>
+          <div id="metricLatency" class="text-xl font-bold text-emerald-400 mono">-- ms</div>
+          <div class="text-[11px] text-slate-500 mt-1">This run, CPU, NumPy</div>
         </div>
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
-          <div class="text-[11px] text-slate-400 uppercase tracking-wider mb-1">Predicted ΔG (Free Energy)</div>
-          <div id="metricDeltaG" class="text-xl font-bold text-purple-400 mono">-- kcal/mol</div>
-          <div class="text-[11px] text-slate-500 mt-1">-RT ln(10) · pKd at 298K</div>
+          <div class="text-[11px] text-slate-400 uppercase tracking-wider mb-1">EGFR Potency Model</div>
+          <div id="metricPearson" class="text-xl font-bold text-purple-400 mono">r = --</div>
+          <div id="metricPearsonNote" class="text-[11px] text-slate-500 mt-1">5-fold CV · ChEMBL EGFR IC50</div>
         </div>
         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
-          <div class="text-[11px] text-slate-400 uppercase tracking-wider mb-1">Cross-Modal Alignment</div>
-          <div id="metricAlignment" class="text-xl font-bold text-amber-400 mono">--</div>
-          <div class="text-[11px] text-slate-500 mt-1">Cosine Sim (Vision ↔ Chem)</div>
+          <div class="text-[11px] text-slate-400 uppercase tracking-wider mb-1">Stroma (measured from H&E)</div>
+          <div id="metricStroma" class="text-xl font-bold text-amber-400 mono">--%</div>
+          <div class="text-[11px] text-slate-500 mt-1">Drives the penetration penalty</div>
         </div>
       </div>
     </div>
@@ -319,7 +308,7 @@
     <div id="synergySection" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
       <div class="border-b border-slate-800 pb-4">
         <h3 class="text-lg font-bold text-white">Dual-Drug Synergy Matrix (Chou-Talalay Combination Index)</h3>
-        <p class="text-xs text-slate-400 mt-0.5">CI = D₁/Dx₁ + D₂/Dx₂ + α·(D₁·D₂)/(Dx₁·Dx₂) · CI &lt; 0.9 synergy · 0.9–1.1 additive · CI &gt; 1.1 antagonism. Lower is better.</p>
+        <p class="text-xs text-slate-400 mt-0.5">CI = D₁/Dx₁ + D₂/Dx₂ + α·(D₁·D₂)/(Dx₁·Dx₂), with Dx from median-effect fits (fa/fu = (D/Dm)^m). CI &lt; 0.9 synergy · 0.9–1.1 additive · &gt; 1.1 antagonism. Dose-response inputs are illustrative, not trial measurements; mPFS/ORR/HR are published trial results.</p>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-xs">
@@ -358,15 +347,20 @@
     let viewerInstance = null;
     let viewerReady = false;
     let pendingFocus = null;
+    let currentPdb = "4ZAU";
+    // 1M17 uses the older mature-protein numbering: Cys773 there is Cys797 in the precursor numbering used elsewhere.
+    const RESIDUE_OFFSET = { "1M17": -24 };
 
     function loadPdb(pdbId, title) {
+      currentPdb = pdbId;
       document.getElementById("activePdbLabel").innerText = title;
       const element = document.getElementById("pdbViewer");
       element.innerHTML = "";
       viewerReady = false;
       try {
         viewerInstance = $3Dmol.createViewer(element, { defaultcolors: $3Dmol.rasmolElementColors });
-        $3Dmol.download("pdb:" + pdbId, viewerInstance, {}, function() {
+        const viewer = viewerInstance;
+        const onLoaded = function() {
           viewerInstance.setStyle({}, { cartoon: { color: "spectrum" } });
           viewerInstance.addSurface($3Dmol.SurfaceType.VDW, { opacity: 0.15, color: "cyan" });
           viewerInstance.zoomTo();
@@ -379,7 +373,12 @@
           } else {
             viewerInstance.animate({ loop: "forward", reps: 0, step: 0.2 });
           }
-        });
+        };
+        // Prefer the copy cached in data/pdb (works offline); fall back to RCSB.
+        fetch(`/api/pdb/${pdbId}`)
+          .then(r => r.ok ? r.text() : Promise.reject(new Error("not cached")))
+          .then(text => { if (viewer !== viewerInstance) return; viewer.addModel(text, "pdb"); onLoaded(); })
+          .catch(() => { if (viewer === viewerInstance) $3Dmol.download("pdb:" + pdbId, viewer, {}, onLoaded); });
       } catch (e) {
         element.innerHTML = `
           <div class="text-center p-4 mono text-xs text-emerald-400">
@@ -407,7 +406,7 @@
           { resi: 790, label: "T790M", color: "#f59e0b" }
         ],
         showVisium: true,
-        clinician: "Savolitinib is a selective MET TKI — it does not bind EGFR. Pairing it with Osimertinib (SAVANNAH, CI 0.38, strong synergy) is only justified for MET-driven bypass resistance. Caveat for this patient: with cis-C797S, Osimertinib has lost its Cys797 anchor, so the EGFR arm of the doublet is compromised. Confirm MET amplification by FISH/NGS first — the Visium overlay on Modality 1 shows MET-high escape niches.",
+        clinician: "Savolitinib is a selective MET TKI — it does not bind EGFR. Pairing it with Osimertinib (SAVANNAH; strong synergy in the CI matrix) is only justified for MET-driven bypass resistance. Caveat for this patient: with cis-C797S, Osimertinib has lost its Cys797 anchor, so the EGFR arm of the doublet is compromised. Confirm MET amplification by FISH/NGS first — the spatial overlay on Modality 1 flags MET-high escape hotspots (Gi*).",
         lay: "Savolitinib blocks a different growth signal, called MET, that some cancers switch to when the main medicine stops working. It only helps if tests show your tumour is relying on MET, so your doctors would check that before adding it."
       },
       allosteric: {
@@ -477,14 +476,18 @@
       const missing = [];
       let chain = null;
       const resis = [];
+      const offset = RESIDUE_OFFSET[currentPdb] || 0;
       entry.residues.forEach(r => {
-        const atoms = v.selectedAtoms(chain ? { resi: r.resi, chain, hetflag: false } : { resi: r.resi, hetflag: false });
+        const resi = r.resi + offset;
+        const atoms = v.selectedAtoms(chain ? { resi, chain, hetflag: false } : { resi, hetflag: false });
         if (!atoms.length) { missing.push(r.resi); return; }
         chain = chain || atoms[0].chain;
-        resis.push(r.resi);
-        v.addStyle({ resi: r.resi, chain }, { stick: { color: r.color, radius: 0.3 } });
+        resis.push(resi);
+        v.addStyle({ resi, chain }, { stick: { color: r.color, radius: 0.3 } });
         const anchor = atoms.find(a => a.atom === "CA") || atoms[0];
-        v.addLabel(r.label, {
+        // Show the residue actually present in this structure (e.g. Cys797 in 4ZAU, Ser797 in 6LUD).
+        const resn = anchor.resn ? anchor.resn.charAt(0) + anchor.resn.slice(1).toLowerCase() : "";
+        v.addLabel(`${r.label} [${resn}${r.resi} in ${currentPdb}]`, {
           position: { x: anchor.x, y: anchor.y, z: anchor.z },
           backgroundColor: "#0f172a", backgroundOpacity: 0.85,
           fontColor: r.color, fontSize: 11, borderColor: r.color, borderThickness: 1, inFront: true
@@ -614,7 +617,60 @@
 
     let visiumData = null;
     let visiumOn = false;
-    const HISTOLOGY_CAPTION = "Spatial Perceiver Resampler compresses patches into M=64 morphological latents.";
+    let histologyInfo = null;
+    let HISTOLOGY_CAPTION = "Spatial Perceiver Resampler compresses H&E patches into M=64 morphological latents.";
+
+    function renderHistologyLabels() {
+      if (!histologyInfo) return;
+      const c = histologyInfo.composition;
+      const stroma = document.getElementById("desmoplasiaLabel");
+      stroma.className = "text-rose-400";
+      stroma.innerText = `Stroma: ${c.stroma_pct_of_tissue}%`;
+      const status = document.getElementById("histologyStatusLabel");
+      status.className = "text-amber-400";
+      status.innerText = `Nuclei: ${c.nuclear_pct_of_tissue}% · ${histologyInfo.n_patches} patches`;
+    }
+
+    function applyHistology(info) {
+      histologyInfo = info;
+      HISTOLOGY_CAPTION = `Spatial Perceiver Resampler compresses ${info.n_patches.toLocaleString()} H&E patches (${info.patch_px}px) into M=64 morphological latents.`;
+      if (!visiumOn) document.getElementById("histologyCaption").innerText = HISTOLOGY_CAPTION;
+      document.getElementById("histologySource").innerText = info.source_note;
+      document.getElementById("histologySource").title = info.source_note;
+      document.getElementById("perceiverFooter").innerText = `Perceiver: ${info.n_patches.toLocaleString()} → 64 Latents`;
+      document.getElementById("histologyImage").src = `/api/histology/image?t=${Date.now()}`;
+      if (!visiumOn) renderHistologyLabels();
+    }
+
+    async function loadHistology() {
+      try {
+        const r = await fetch("/api/histology");
+        applyHistology(await r.json());
+      } catch (e) { console.error(e); }
+    }
+
+    async function uploadHistology(input) {
+      if (!input.files.length) return;
+      const form = new FormData();
+      form.append("image", input.files[0]);
+      document.getElementById("histologySource").innerText = "Measuring uploaded tile…";
+      const r = await fetch("/api/histology", { method: "POST", body: form });
+      const info = await r.json();
+      if (!r.ok) { document.getElementById("histologySource").innerText = info.error; return; }
+      applyHistology(info);
+      input.value = "";
+    }
+
+    async function loadBenchmarks() {
+      try {
+        const b = await (await fetch("/api/benchmarks")).json();
+        if (b.egfr_affinity) {
+          document.getElementById("metricPearson").innerText = `r = ${b.egfr_affinity.pearson_r}`;
+          document.getElementById("metricPearsonNote").innerText =
+            `5-fold CV · ${b.egfr_affinity.n_compounds.toLocaleString()} ChEMBL EGFR IC50 · RMSE ${b.egfr_affinity.rmse_pic50}`;
+        }
+      } catch (e) { console.error(e); }
+    }
 
     function escapeColor(score, threshold) {
       if (score >= threshold) return "#f43f5e";
@@ -635,9 +691,7 @@
       document.getElementById("visiumLayer").classList.add("hidden");
       document.getElementById("visiumSpotCard").classList.add("hidden");
       document.getElementById("histologyCaption").innerText = HISTOLOGY_CAPTION;
-      const status = document.getElementById("histologyStatusLabel");
-      status.className = "text-amber-400";
-      status.innerText = "TIL: Immune-Excluded";
+      renderHistologyLabels();
     }
 
     async function toggleVisium() {
@@ -672,37 +726,34 @@
     }
 
     function renderVisium() {
-      const { spots, escape_threshold: threshold, platform, normalization } = visiumData;
+      const { spots, escape_threshold: threshold, image_px: imagePx, center_to_center_px: pitch, recommendation } = visiumData;
       const layer = document.getElementById("visiumLayer");
+      layer.setAttribute("viewBox", `0 0 ${imagePx[0]} ${imagePx[1]}`);
+      // Visium spots are 55 µm wide on a 100 µm pitch.
+      const r = pitch * 0.275;
 
-      // Fit spot pixel coordinates into the 200×200 histology viewBox with a uniform
-      // scale, keeping clear of the bottom status bar.
-      const xs = spots.map(s => s.pxl_x), ys = spots.map(s => s.pxl_y);
-      const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
-      const scale = Math.min(130 / Math.max(maxX - minX, 1), 115 / Math.max(maxY - minY, 1));
-      const offX = 100 - ((maxX - minX) * scale) / 2, offY = 90 - ((maxY - minY) * scale) / 2;
-      const project = s => [offX + (s.pxl_x - minX) * scale, offY + (s.pxl_y - minY) * scale];
-
-      let svg = `<defs><filter id="spotGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3.5"/></filter></defs>
-        <rect width="200" height="200" fill="#020617" opacity="0.45"/>`;
+      let svg = `<defs><filter id="spotGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="${r * 0.5}"/></filter></defs>
+        <rect width="${imagePx[0]}" height="${imagePx[1]}" fill="#020617" opacity="0.35"/>`;
       spots.forEach((s, i) => {
-        const [x, y] = project(s);
         const color = escapeColor(s.escape_score, threshold);
-        const [topGene, topUmi] = Object.entries(s.expression_log2_umi).sort((a, b) => b[1] - a[1])[0];
-        svg += `
-          <circle cx="${x}" cy="${y}" r="15" fill="${color}" filter="url(#spotGlow)" class="${s.escape_score >= threshold ? "visium-halo" : ""}" opacity="0.45"/>
-          <circle cx="${x}" cy="${y}" r="7.5" fill="${color}" fill-opacity="0.85" class="visium-spot" data-idx="${i}"
-                  onmouseenter="selectVisiumSpot(${i})" onclick="selectVisiumSpot(${i})"><title>${s.barcode} · escape ${s.escape_score}</title></circle>
-          <text x="${x}" y="${y + 15}" text-anchor="middle" font-size="6" font-family="JetBrains Mono, monospace" fill="#e2e8f0">${topGene} ${topUmi.toFixed(2)}</text>`;
+        if (s.hotspot) {
+          svg += `<circle cx="${s.pxl_x}" cy="${s.pxl_y}" r="${r * 1.9}" fill="${color}" filter="url(#spotGlow)" class="visium-halo" opacity="0.5"/>`;
+        }
+        svg += `<circle cx="${s.pxl_x}" cy="${s.pxl_y}" r="${r}" fill="${color}" fill-opacity="${s.escape_score >= 0.5 ? 0.85 : 0.45}" class="visium-spot" data-idx="${i}"
+                  onmouseenter="selectVisiumSpot(${i})" onclick="selectVisiumSpot(${i})"><title>${s.barcode} · escape ${s.escape_score}</title></circle>`;
       });
       layer.innerHTML = svg;
       layer.classList.remove("hidden");
 
-      const escaping = spots.filter(s => s.escape_score >= threshold).length;
-      document.getElementById("histologyCaption").innerText = `${platform} · ${normalization}`;
+      document.getElementById("histologyCaption").innerText =
+        `LDV Labs spatial layer · ${spots.length} simulated Visium spots (demo data) · escape = sigmoid(MET, AXL, PD-L1, EGFR)`;
+      document.getElementById("histologyCaption").title = recommendation.summary;
+      const stroma = document.getElementById("desmoplasiaLabel");
+      stroma.className = "text-pink-400";
+      stroma.innerText = `Gi* hotspots: ${visiumData.n_hotspots}`;
       const status = document.getElementById("histologyStatusLabel");
       status.className = "text-pink-400";
-      status.innerText = `Escape ≥${threshold}: ${escaping}/${spots.length} spots`;
+      status.innerText = `Escape ≥${threshold}: ${visiumData.n_escape}/${spots.length} spots`;
 
       // Open on the highest-escape spot so the most actionable niche is visible first.
       const worst = spots.reduce((best, s, i) => (s.escape_score > spots[best].escape_score ? i : best), 0);
@@ -716,19 +767,19 @@
       document.querySelectorAll("#visiumLayer .visium-spot").forEach(el =>
         el.classList.toggle("selected", Number(el.dataset.idx) === idx));
 
-      // log2(UMI+1) bars on a shared 0–10 scale so genes compare across spots.
+      // log2(UMI+1) bars on a shared 0–12 scale so genes compare across spots.
       const bars = Object.entries(s.expression_log2_umi).map(([gene, v]) => `
         <div class="flex items-center gap-1">
           <span class="w-9 text-slate-400">${gene}</span>
-          <div class="flex-1 h-1.5 rounded bg-slate-800"><div class="h-full rounded" style="width:${Math.min(v / 10, 1) * 100}%; background:${color};"></div></div>
+          <div class="flex-1 h-1.5 rounded bg-slate-800"><div class="h-full rounded" style="width:${Math.min(v / 12, 1) * 100}%; background:${color};"></div></div>
           <span class="w-7 text-right text-slate-200">${v.toFixed(2)}</span>
         </div>`).join("");
 
       const card = document.getElementById("visiumSpotCard");
       card.innerHTML = `
-        <div class="flex justify-between mb-0.5"><span class="text-slate-500">${s.barcode}</span></div>
-        <div class="font-bold" style="color:${color};">Escape ${s.escape_score.toFixed(2)} · ${s.alert_status.replace(/_/g, " ")}</div>
-        <div class="text-slate-400 leading-tight mb-1">${s.histology_niche}</div>
+        <div class="flex justify-between mb-0.5"><span class="text-slate-500">${s.barcode}</span><span class="text-slate-500">Gi* z ${s.gi_star_z}</span></div>
+        <div class="font-bold" style="color:${color};">Escape ${s.escape_score.toFixed(2)}</div>
+        <div class="text-slate-400 leading-tight mb-1">${s.alert_status.replace(/_/g, " ")}</div>
         <div class="text-slate-500 mb-0.5">log2 UMI · cellularity ${Math.round(s.tumor_cellularity * 100)}%</div>
         <div class="space-y-0.5">${bars}</div>`;
       card.classList.remove("hidden");
@@ -818,13 +869,14 @@
           </td>
           <td class="py-3 pr-4">
             <div class="flex items-center justify-between mb-1 mono">
-              <span class="text-base font-bold text-white">${r.combination_index}</span>
+              <span class="text-base font-bold text-white">${r.combination_index}</span><span class="text-[10px] text-slate-500">at ED50</span>
             </div>
             <div class="relative h-2.5 rounded bg-slate-950 border border-slate-800" title="CI ${r.combination_index}: ${r.category}">
               <div class="absolute top-0 bottom-0 bg-slate-700/60" style="left: ${pct(0.9)}%; width: ${pct(1.1) - pct(0.9)}%;"></div>
               <div class="absolute top-0 bottom-0 left-0 rounded ${barColor}" style="width: ${pct(r.combination_index)}%;"></div>
             </div>
             <div class="flex justify-between text-[10px] text-slate-500 mono mt-0.5"><span>0</span><span>0.9</span><span>1.5</span></div>
+            <div class="mt-1 text-[10px] text-slate-400 mono">${(r.ci_by_effect || []).map(c => `ED${Math.round(c.fa * 100)} ${c.ci}`).join(" · ")}</div>
             <div class="mt-1 text-[11px]">${status}</div>
           </td>
           <td class="py-3 pr-4 mono text-slate-200">${fmt(r.median_pfs_months, " mo")}</td>
@@ -874,9 +926,9 @@
         document.getElementById("gateVis").innerText = data.fusion_telemetry.tanh_gates.tanh_alpha_vis;
         document.getElementById("gateChem").innerText = data.fusion_telemetry.tanh_gates.tanh_alpha_chem;
         document.getElementById("metricCompression").innerText = data.fusion_telemetry.perceiver_compression_ratio;
-        document.getElementById("metricPkd").innerText = data.fusion_telemetry.predicted_pkd;
-        document.getElementById("metricDeltaG").innerText = data.fusion_telemetry.predicted_delta_g_kcal_mol + " kcal/mol";
-        document.getElementById("metricAlignment").innerText = data.fusion_telemetry.alignment_metrics.vision_chemistry_alignment;
+        document.getElementById("metricLatency").innerText = data.fusion_telemetry.fusion_latency_ms + " ms";
+        document.getElementById("metricStroma").innerText = data.histopathology.measured_from_image.stroma_pct_of_tissue + "%";
+        loadBenchmarks();
 
         renderTimeline(data.longitudinal_timeline);
         renderSynergyMatrix(data.combination_synergy);
@@ -917,8 +969,12 @@
               
               <div class="mt-4 space-y-1.5 text-xs mono">
                 <div class="flex justify-between py-1 border-b border-slate-800/60">
-                  <span class="text-slate-400">Binding Affinity:</span>
-                  <span class="text-emerald-400 font-semibold">${drug.predicted_affinity_kcal} kcal/mol</span>
+                  <span class="text-slate-400">Predicted pIC50 (ChEMBL model):</span>
+                  <span class="text-emerald-400 font-semibold">${drug.predicted_pic50}</span>
+                </div>
+                <div class="flex justify-between py-1 border-b border-slate-800/60">
+                  <span class="text-slate-400">Planner → Critic:</span>
+                  <span class="text-slate-200">${drug.planner_score} → <span class="font-semibold text-white">${drug.composite_score}</span></span>
                 </div>
                 <div class="flex justify-between py-1 border-b border-slate-800/60">
                   <span class="text-slate-400">Mol Weight:</span>
@@ -931,7 +987,7 @@
               </div>
 
               <div class="mt-4 p-3 rounded-xl bg-slate-950 border border-slate-800/80 text-xs">
-                <span class="text-slate-400 uppercase tracking-wider text-[10px] block mb-1">Argon Biophysical Rationale</span>
+                <span class="text-slate-400 uppercase tracking-wider text-[10px] block mb-1">Critic Rationale</span>
                 <p class="text-slate-300 leading-relaxed">${drug.critic_rationale}</p>
               </div>
             </div>
@@ -957,6 +1013,7 @@
 
     window.addEventListener("DOMContentLoaded", function() {
       loadPdb("4ZAU", "4ZAU (EGFR + Osimertinib Covalent)");
+      loadHistology();
       initVoiceCopilot();
     });
   </script>

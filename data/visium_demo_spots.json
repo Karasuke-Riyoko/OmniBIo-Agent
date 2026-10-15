@@ -1,0 +1,1694 @@
+{
+ "slide_id": "SIMULATED-DEMO-ON-SAMPLE-HE",
+ "simulated": true,
+ "platform": "Simulated 10x Visium geometry (55 um spots, 100 um centre-to-centre)",
+ "normalization": "log2(UMI_count + 1)",
+ "image_px": [
+  1024,
+  1024
+ ],
+ "center_to_center_px": 96,
+ "generator": "scripts/simulate_visium_demo.py (seed 11)",
+ "spots": [
+  {
+   "barcode": "SIM0000-1",
+   "array_row": 0,
+   "array_col": 0,
+   "pxl_x": 48.0,
+   "pxl_y": 48.0,
+   "tumor_cellularity": 0.84,
+   "expression_log2_umi": {
+    "EGFR": 6.71,
+    "MET": 2.68,
+    "AXL": 2.96,
+    "CD274": 3.12
+   }
+  },
+  {
+   "barcode": "SIM0001-1",
+   "array_row": 0,
+   "array_col": 1,
+   "pxl_x": 144.0,
+   "pxl_y": 48.0,
+   "tumor_cellularity": 0.7,
+   "expression_log2_umi": {
+    "EGFR": 5.82,
+    "MET": 2.0,
+    "AXL": 3.11,
+    "CD274": 3.67
+   }
+  },
+  {
+   "barcode": "SIM0002-1",
+   "array_row": 0,
+   "array_col": 2,
+   "pxl_x": 240.0,
+   "pxl_y": 48.0,
+   "tumor_cellularity": 0.59,
+   "expression_log2_umi": {
+    "EGFR": 5.55,
+    "MET": 1.52,
+    "AXL": 3.69,
+    "CD274": 3.98
+   }
+  },
+  {
+   "barcode": "SIM0003-1",
+   "array_row": 0,
+   "array_col": 3,
+   "pxl_x": 336.0,
+   "pxl_y": 48.0,
+   "tumor_cellularity": 0.28,
+   "expression_log2_umi": {
+    "EGFR": 3.79,
+    "MET": 1.78,
+    "AXL": 3.33,
+    "CD274": 4.4
+   }
+  },
+  {
+   "barcode": "SIM0004-1",
+   "array_row": 0,
+   "array_col": 4,
+   "pxl_x": 432.0,
+   "pxl_y": 48.0,
+   "tumor_cellularity": 0.63,
+   "expression_log2_umi": {
+    "EGFR": 5.81,
+    "MET": 2.04,
+    "AXL": 3.02,
+    "CD274": 4.03
+   }
+  },
+  {
+   "barcode": "SIM0005-1",
+   "array_row": 0,
+   "array_col": 5,
+   "pxl_x": 528.0,
+   "pxl_y": 48.0,
+   "tumor_cellularity": 0.29,
+   "expression_log2_umi": {
+    "EGFR": 3.31,
+    "MET": 1.38,
+    "AXL": 3.15,
+    "CD274": 3.59
+   }
+  },
+  {
+   "barcode": "SIM0006-1",
+   "array_row": 0,
+   "array_col": 6,
+   "pxl_x": 624.0,
+   "pxl_y": 48.0,
+   "tumor_cellularity": 0.19,
+   "expression_log2_umi": {
+    "EGFR": 2.39,
+    "MET": 1.51,
+    "AXL": 3.11,
+    "CD274": 3.69
+   }
+  },
+  {
+   "barcode": "SIM0007-1",
+   "array_row": 0,
+   "array_col": 7,
+   "pxl_x": 720.0,
+   "pxl_y": 48.0,
+   "tumor_cellularity": 0.75,
+   "expression_log2_umi": {
+    "EGFR": 5.7,
+    "MET": 2.21,
+    "AXL": 3.14,
+    "CD274": 3.53
+   }
+  },
+  {
+   "barcode": "SIM0008-1",
+   "array_row": 0,
+   "array_col": 8,
+   "pxl_x": 816.0,
+   "pxl_y": 48.0,
+   "tumor_cellularity": 0.51,
+   "expression_log2_umi": {
+    "EGFR": 4.58,
+    "MET": 2.12,
+    "AXL": 2.99,
+    "CD274": 3.39
+   }
+  },
+  {
+   "barcode": "SIM0009-1",
+   "array_row": 0,
+   "array_col": 9,
+   "pxl_x": 912.0,
+   "pxl_y": 48.0,
+   "tumor_cellularity": 0.71,
+   "expression_log2_umi": {
+    "EGFR": 6.16,
+    "MET": 2.48,
+    "AXL": 2.45,
+    "CD274": 2.93
+   }
+  },
+  {
+   "barcode": "SIM0100-1",
+   "array_row": 1,
+   "array_col": 0,
+   "pxl_x": 96.0,
+   "pxl_y": 131.1,
+   "tumor_cellularity": 0.63,
+   "expression_log2_umi": {
+    "EGFR": 5.63,
+    "MET": 2.18,
+    "AXL": 2.68,
+    "CD274": 2.61
+   }
+  },
+  {
+   "barcode": "SIM0101-1",
+   "array_row": 1,
+   "array_col": 1,
+   "pxl_x": 192.0,
+   "pxl_y": 131.1,
+   "tumor_cellularity": 0.03,
+   "expression_log2_umi": {
+    "EGFR": 1.96,
+    "MET": 1.38,
+    "AXL": 3.56,
+    "CD274": 5.04
+   }
+  },
+  {
+   "barcode": "SIM0102-1",
+   "array_row": 1,
+   "array_col": 2,
+   "pxl_x": 288.0,
+   "pxl_y": 131.1,
+   "tumor_cellularity": 0.54,
+   "expression_log2_umi": {
+    "EGFR": 5.19,
+    "MET": 1.82,
+    "AXL": 3.14,
+    "CD274": 3.67
+   }
+  },
+  {
+   "barcode": "SIM0103-1",
+   "array_row": 1,
+   "array_col": 3,
+   "pxl_x": 384.0,
+   "pxl_y": 131.1,
+   "tumor_cellularity": 0.75,
+   "expression_log2_umi": {
+    "EGFR": 6.44,
+    "MET": 2.34,
+    "AXL": 2.8,
+    "CD274": 2.77
+   }
+  },
+  {
+   "barcode": "SIM0104-1",
+   "array_row": 1,
+   "array_col": 4,
+   "pxl_x": 480.0,
+   "pxl_y": 131.1,
+   "tumor_cellularity": 0.4,
+   "expression_log2_umi": {
+    "EGFR": 4.45,
+    "MET": 2.12,
+    "AXL": 2.83,
+    "CD274": 4.27
+   }
+  },
+  {
+   "barcode": "SIM0105-1",
+   "array_row": 1,
+   "array_col": 5,
+   "pxl_x": 576.0,
+   "pxl_y": 131.1,
+   "tumor_cellularity": 0.01,
+   "expression_log2_umi": {
+    "EGFR": 1.96,
+    "MET": 1.85,
+    "AXL": 3.68,
+    "CD274": 4.69
+   }
+  },
+  {
+   "barcode": "SIM0106-1",
+   "array_row": 1,
+   "array_col": 6,
+   "pxl_x": 672.0,
+   "pxl_y": 131.1,
+   "tumor_cellularity": 0.48,
+   "expression_log2_umi": {
+    "EGFR": 4.81,
+    "MET": 1.72,
+    "AXL": 3.43,
+    "CD274": 4.01
+   }
+  },
+  {
+   "barcode": "SIM0107-1",
+   "array_row": 1,
+   "array_col": 7,
+   "pxl_x": 768.0,
+   "pxl_y": 131.1,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 8.41,
+    "MET": 2.34,
+    "AXL": 2.5,
+    "CD274": 2.97
+   }
+  },
+  {
+   "barcode": "SIM0108-1",
+   "array_row": 1,
+   "array_col": 8,
+   "pxl_x": 864.0,
+   "pxl_y": 131.1,
+   "tumor_cellularity": 0.59,
+   "expression_log2_umi": {
+    "EGFR": 5.24,
+    "MET": 2.26,
+    "AXL": 3.45,
+    "CD274": 4.37
+   }
+  },
+  {
+   "barcode": "SIM0109-1",
+   "array_row": 1,
+   "array_col": 9,
+   "pxl_x": 960.0,
+   "pxl_y": 131.1,
+   "tumor_cellularity": 0.11,
+   "expression_log2_umi": {
+    "EGFR": 2.04,
+    "MET": 1.95,
+    "AXL": 3.71,
+    "CD274": 4.39
+   }
+  },
+  {
+   "barcode": "SIM0200-1",
+   "array_row": 2,
+   "array_col": 0,
+   "pxl_x": 48.0,
+   "pxl_y": 214.3,
+   "tumor_cellularity": 0.72,
+   "expression_log2_umi": {
+    "EGFR": 5.67,
+    "MET": 2.56,
+    "AXL": 2.46,
+    "CD274": 3.73
+   }
+  },
+  {
+   "barcode": "SIM0201-1",
+   "array_row": 2,
+   "array_col": 1,
+   "pxl_x": 144.0,
+   "pxl_y": 214.3,
+   "tumor_cellularity": 0.2,
+   "expression_log2_umi": {
+    "EGFR": 3.56,
+    "MET": 1.3,
+    "AXL": 3.33,
+    "CD274": 3.84
+   }
+  },
+  {
+   "barcode": "SIM0202-1",
+   "array_row": 2,
+   "array_col": 2,
+   "pxl_x": 240.0,
+   "pxl_y": 214.3,
+   "tumor_cellularity": 0.2,
+   "expression_log2_umi": {
+    "EGFR": 3.18,
+    "MET": 2.28,
+    "AXL": 3.44,
+    "CD274": 2.99
+   }
+  },
+  {
+   "barcode": "SIM0203-1",
+   "array_row": 2,
+   "array_col": 3,
+   "pxl_x": 336.0,
+   "pxl_y": 214.3,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 7.56,
+    "MET": 2.78,
+    "AXL": 2.7,
+    "CD274": 2.9
+   }
+  },
+  {
+   "barcode": "SIM0204-1",
+   "array_row": 2,
+   "array_col": 4,
+   "pxl_x": 432.0,
+   "pxl_y": 214.3,
+   "tumor_cellularity": 0.72,
+   "expression_log2_umi": {
+    "EGFR": 5.74,
+    "MET": 2.42,
+    "AXL": 2.66,
+    "CD274": 3.21
+   }
+  },
+  {
+   "barcode": "SIM0205-1",
+   "array_row": 2,
+   "array_col": 5,
+   "pxl_x": 528.0,
+   "pxl_y": 214.3,
+   "tumor_cellularity": 0.58,
+   "expression_log2_umi": {
+    "EGFR": 4.98,
+    "MET": 2.28,
+    "AXL": 2.9,
+    "CD274": 3.44
+   }
+  },
+  {
+   "barcode": "SIM0206-1",
+   "array_row": 2,
+   "array_col": 6,
+   "pxl_x": 624.0,
+   "pxl_y": 214.3,
+   "tumor_cellularity": 0.47,
+   "expression_log2_umi": {
+    "EGFR": 4.56,
+    "MET": 1.62,
+    "AXL": 3.08,
+    "CD274": 4.35
+   }
+  },
+  {
+   "barcode": "SIM0207-1",
+   "array_row": 2,
+   "array_col": 7,
+   "pxl_x": 720.0,
+   "pxl_y": 214.3,
+   "tumor_cellularity": 0.55,
+   "expression_log2_umi": {
+    "EGFR": 5.0,
+    "MET": 1.61,
+    "AXL": 3.68,
+    "CD274": 4.24
+   }
+  },
+  {
+   "barcode": "SIM0208-1",
+   "array_row": 2,
+   "array_col": 8,
+   "pxl_x": 816.0,
+   "pxl_y": 214.3,
+   "tumor_cellularity": 0.98,
+   "expression_log2_umi": {
+    "EGFR": 8.25,
+    "MET": 2.41,
+    "AXL": 2.55,
+    "CD274": 2.95
+   }
+  },
+  {
+   "barcode": "SIM0209-1",
+   "array_row": 2,
+   "array_col": 9,
+   "pxl_x": 912.0,
+   "pxl_y": 214.3,
+   "tumor_cellularity": 0.09,
+   "expression_log2_umi": {
+    "EGFR": 2.94,
+    "MET": 2.44,
+    "AXL": 3.86,
+    "CD274": 4.84
+   }
+  },
+  {
+   "barcode": "SIM0300-1",
+   "array_row": 3,
+   "array_col": 0,
+   "pxl_x": 96.0,
+   "pxl_y": 297.4,
+   "tumor_cellularity": 0.17,
+   "expression_log2_umi": {
+    "EGFR": 3.19,
+    "MET": 1.53,
+    "AXL": 3.49,
+    "CD274": 4.28
+   }
+  },
+  {
+   "barcode": "SIM0301-1",
+   "array_row": 3,
+   "array_col": 1,
+   "pxl_x": 192.0,
+   "pxl_y": 297.4,
+   "tumor_cellularity": 0.68,
+   "expression_log2_umi": {
+    "EGFR": 5.9,
+    "MET": 2.69,
+    "AXL": 2.6,
+    "CD274": 3.44
+   }
+  },
+  {
+   "barcode": "SIM0302-1",
+   "array_row": 3,
+   "array_col": 2,
+   "pxl_x": 288.0,
+   "pxl_y": 297.4,
+   "tumor_cellularity": 0.82,
+   "expression_log2_umi": {
+    "EGFR": 6.45,
+    "MET": 2.93,
+    "AXL": 1.97,
+    "CD274": 2.57
+   }
+  },
+  {
+   "barcode": "SIM0303-1",
+   "array_row": 3,
+   "array_col": 3,
+   "pxl_x": 384.0,
+   "pxl_y": 297.4,
+   "tumor_cellularity": 0.63,
+   "expression_log2_umi": {
+    "EGFR": 5.82,
+    "MET": 2.78,
+    "AXL": 3.43,
+    "CD274": 3.76
+   }
+  },
+  {
+   "barcode": "SIM0304-1",
+   "array_row": 3,
+   "array_col": 4,
+   "pxl_x": 480.0,
+   "pxl_y": 297.4,
+   "tumor_cellularity": 0.67,
+   "expression_log2_umi": {
+    "EGFR": 6.24,
+    "MET": 3.08,
+    "AXL": 3.44,
+    "CD274": 3.51
+   }
+  },
+  {
+   "barcode": "SIM0305-1",
+   "array_row": 3,
+   "array_col": 5,
+   "pxl_x": 576.0,
+   "pxl_y": 297.4,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 7.42,
+    "MET": 2.51,
+    "AXL": 2.27,
+    "CD274": 2.57
+   }
+  },
+  {
+   "barcode": "SIM0306-1",
+   "array_row": 3,
+   "array_col": 6,
+   "pxl_x": 672.0,
+   "pxl_y": 297.4,
+   "tumor_cellularity": 0.47,
+   "expression_log2_umi": {
+    "EGFR": 4.42,
+    "MET": 2.02,
+    "AXL": 3.55,
+    "CD274": 4.16
+   }
+  },
+  {
+   "barcode": "SIM0307-1",
+   "array_row": 3,
+   "array_col": 7,
+   "pxl_x": 768.0,
+   "pxl_y": 297.4,
+   "tumor_cellularity": 0.04,
+   "expression_log2_umi": {
+    "EGFR": 1.53,
+    "MET": 1.62,
+    "AXL": 4.06,
+    "CD274": 5.23
+   }
+  },
+  {
+   "barcode": "SIM0308-1",
+   "array_row": 3,
+   "array_col": 8,
+   "pxl_x": 864.0,
+   "pxl_y": 297.4,
+   "tumor_cellularity": 0.57,
+   "expression_log2_umi": {
+    "EGFR": 5.39,
+    "MET": 1.86,
+    "AXL": 2.77,
+    "CD274": 4.34
+   }
+  },
+  {
+   "barcode": "SIM0309-1",
+   "array_row": 3,
+   "array_col": 9,
+   "pxl_x": 960.0,
+   "pxl_y": 297.4,
+   "tumor_cellularity": 0.1,
+   "expression_log2_umi": {
+    "EGFR": 2.83,
+    "MET": 2.23,
+    "AXL": 4.07,
+    "CD274": 4.01
+   }
+  },
+  {
+   "barcode": "SIM0400-1",
+   "array_row": 4,
+   "array_col": 0,
+   "pxl_x": 48.0,
+   "pxl_y": 380.6,
+   "tumor_cellularity": 0.1,
+   "expression_log2_umi": {
+    "EGFR": 2.68,
+    "MET": 1.87,
+    "AXL": 4.02,
+    "CD274": 4.88
+   }
+  },
+  {
+   "barcode": "SIM0401-1",
+   "array_row": 4,
+   "array_col": 1,
+   "pxl_x": 144.0,
+   "pxl_y": 380.6,
+   "tumor_cellularity": 0.93,
+   "expression_log2_umi": {
+    "EGFR": 7.28,
+    "MET": 2.74,
+    "AXL": 2.1,
+    "CD274": 2.99
+   }
+  },
+  {
+   "barcode": "SIM0402-1",
+   "array_row": 4,
+   "array_col": 2,
+   "pxl_x": 240.0,
+   "pxl_y": 380.6,
+   "tumor_cellularity": 0.78,
+   "expression_log2_umi": {
+    "EGFR": 6.11,
+    "MET": 3.48,
+    "AXL": 3.09,
+    "CD274": 3.56
+   }
+  },
+  {
+   "barcode": "SIM0403-1",
+   "array_row": 4,
+   "array_col": 3,
+   "pxl_x": 336.0,
+   "pxl_y": 380.6,
+   "tumor_cellularity": 0.96,
+   "expression_log2_umi": {
+    "EGFR": 7.66,
+    "MET": 4.89,
+    "AXL": 4.04,
+    "CD274": 3.6
+   }
+  },
+  {
+   "barcode": "SIM0404-1",
+   "array_row": 4,
+   "array_col": 4,
+   "pxl_x": 432.0,
+   "pxl_y": 380.6,
+   "tumor_cellularity": 0.79,
+   "expression_log2_umi": {
+    "EGFR": 6.25,
+    "MET": 4.86,
+    "AXL": 4.1,
+    "CD274": 3.91
+   }
+  },
+  {
+   "barcode": "SIM0405-1",
+   "array_row": 4,
+   "array_col": 5,
+   "pxl_x": 528.0,
+   "pxl_y": 380.6,
+   "tumor_cellularity": 0.87,
+   "expression_log2_umi": {
+    "EGFR": 6.87,
+    "MET": 4.11,
+    "AXL": 2.97,
+    "CD274": 3.58
+   }
+  },
+  {
+   "barcode": "SIM0406-1",
+   "array_row": 4,
+   "array_col": 6,
+   "pxl_x": 624.0,
+   "pxl_y": 380.6,
+   "tumor_cellularity": 0.68,
+   "expression_log2_umi": {
+    "EGFR": 5.54,
+    "MET": 2.48,
+    "AXL": 2.67,
+    "CD274": 2.97
+   }
+  },
+  {
+   "barcode": "SIM0407-1",
+   "array_row": 4,
+   "array_col": 7,
+   "pxl_x": 720.0,
+   "pxl_y": 380.6,
+   "tumor_cellularity": 0.07,
+   "expression_log2_umi": {
+    "EGFR": 2.52,
+    "MET": 1.59,
+    "AXL": 3.8,
+    "CD274": 4.75
+   }
+  },
+  {
+   "barcode": "SIM0408-1",
+   "array_row": 4,
+   "array_col": 8,
+   "pxl_x": 816.0,
+   "pxl_y": 380.6,
+   "tumor_cellularity": 0.26,
+   "expression_log2_umi": {
+    "EGFR": 3.94,
+    "MET": 1.84,
+    "AXL": 3.22,
+    "CD274": 4.41
+   }
+  },
+  {
+   "barcode": "SIM0409-1",
+   "array_row": 4,
+   "array_col": 9,
+   "pxl_x": 912.0,
+   "pxl_y": 380.6,
+   "tumor_cellularity": 0.42,
+   "expression_log2_umi": {
+    "EGFR": 3.8,
+    "MET": 2.47,
+    "AXL": 2.79,
+    "CD274": 4.18
+   }
+  },
+  {
+   "barcode": "SIM0500-1",
+   "array_row": 5,
+   "array_col": 0,
+   "pxl_x": 96.0,
+   "pxl_y": 463.7,
+   "tumor_cellularity": 0.97,
+   "expression_log2_umi": {
+    "EGFR": 7.64,
+    "MET": 2.24,
+    "AXL": 2.41,
+    "CD274": 3.1
+   }
+  },
+  {
+   "barcode": "SIM0501-1",
+   "array_row": 5,
+   "array_col": 1,
+   "pxl_x": 192.0,
+   "pxl_y": 463.7,
+   "tumor_cellularity": 0.81,
+   "expression_log2_umi": {
+    "EGFR": 6.73,
+    "MET": 3.77,
+    "AXL": 3.77,
+    "CD274": 3.6
+   }
+  },
+  {
+   "barcode": "SIM0502-1",
+   "array_row": 5,
+   "array_col": 2,
+   "pxl_x": 288.0,
+   "pxl_y": 463.7,
+   "tumor_cellularity": 0.61,
+   "expression_log2_umi": {
+    "EGFR": 5.53,
+    "MET": 5.92,
+    "AXL": 5.41,
+    "CD274": 4.02
+   }
+  },
+  {
+   "barcode": "SIM0503-1",
+   "array_row": 5,
+   "array_col": 3,
+   "pxl_x": 384.0,
+   "pxl_y": 463.7,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 8.1,
+    "MET": 8.02,
+    "AXL": 5.71,
+    "CD274": 4.38
+   }
+  },
+  {
+   "barcode": "SIM0504-1",
+   "array_row": 5,
+   "array_col": 4,
+   "pxl_x": 480.0,
+   "pxl_y": 463.7,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 8.5,
+    "MET": 7.45,
+    "AXL": 5.18,
+    "CD274": 4.21
+   }
+  },
+  {
+   "barcode": "SIM0505-1",
+   "array_row": 5,
+   "array_col": 5,
+   "pxl_x": 576.0,
+   "pxl_y": 463.7,
+   "tumor_cellularity": 0.29,
+   "expression_log2_umi": {
+    "EGFR": 3.49,
+    "MET": 3.94,
+    "AXL": 5.11,
+    "CD274": 4.36
+   }
+  },
+  {
+   "barcode": "SIM0506-1",
+   "array_row": 5,
+   "array_col": 6,
+   "pxl_x": 672.0,
+   "pxl_y": 463.7,
+   "tumor_cellularity": 0.03,
+   "expression_log2_umi": {
+    "EGFR": 2.22,
+    "MET": 1.85,
+    "AXL": 3.68,
+    "CD274": 4.06
+   }
+  },
+  {
+   "barcode": "SIM0507-1",
+   "array_row": 5,
+   "array_col": 7,
+   "pxl_x": 768.0,
+   "pxl_y": 463.7,
+   "tumor_cellularity": 0.36,
+   "expression_log2_umi": {
+    "EGFR": 3.47,
+    "MET": 1.68,
+    "AXL": 3.39,
+    "CD274": 4.37
+   }
+  },
+  {
+   "barcode": "SIM0508-1",
+   "array_row": 5,
+   "array_col": 8,
+   "pxl_x": 864.0,
+   "pxl_y": 463.7,
+   "tumor_cellularity": 0.03,
+   "expression_log2_umi": {
+    "EGFR": 2.19,
+    "MET": 1.96,
+    "AXL": 3.18,
+    "CD274": 3.48
+   }
+  },
+  {
+   "barcode": "SIM0509-1",
+   "array_row": 5,
+   "array_col": 9,
+   "pxl_x": 960.0,
+   "pxl_y": 463.7,
+   "tumor_cellularity": 0.0,
+   "expression_log2_umi": {
+    "EGFR": 2.06,
+    "MET": 1.73,
+    "AXL": 3.22,
+    "CD274": 4.24
+   }
+  },
+  {
+   "barcode": "SIM0600-1",
+   "array_row": 6,
+   "array_col": 0,
+   "pxl_x": 48.0,
+   "pxl_y": 546.8,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 7.98,
+    "MET": 2.31,
+    "AXL": 1.86,
+    "CD274": 2.8
+   }
+  },
+  {
+   "barcode": "SIM0601-1",
+   "array_row": 6,
+   "array_col": 1,
+   "pxl_x": 144.0,
+   "pxl_y": 546.8,
+   "tumor_cellularity": 0.33,
+   "expression_log2_umi": {
+    "EGFR": 3.79,
+    "MET": 2.71,
+    "AXL": 4.04,
+    "CD274": 4.63
+   }
+  },
+  {
+   "barcode": "SIM0602-1",
+   "array_row": 6,
+   "array_col": 2,
+   "pxl_x": 240.0,
+   "pxl_y": 546.8,
+   "tumor_cellularity": 0.87,
+   "expression_log2_umi": {
+    "EGFR": 6.7,
+    "MET": 5.91,
+    "AXL": 4.89,
+    "CD274": 4.04
+   }
+  },
+  {
+   "barcode": "SIM0603-1",
+   "array_row": 6,
+   "array_col": 3,
+   "pxl_x": 336.0,
+   "pxl_y": 546.8,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 8.68,
+    "MET": 9.19,
+    "AXL": 6.91,
+    "CD274": 5.09
+   }
+  },
+  {
+   "barcode": "SIM0604-1",
+   "array_row": 6,
+   "array_col": 4,
+   "pxl_x": 432.0,
+   "pxl_y": 546.8,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 10.44,
+    "MET": 10.09,
+    "AXL": 7.01,
+    "CD274": 4.65
+   }
+  },
+  {
+   "barcode": "SIM0605-1",
+   "array_row": 6,
+   "array_col": 5,
+   "pxl_x": 528.0,
+   "pxl_y": 546.8,
+   "tumor_cellularity": 0.38,
+   "expression_log2_umi": {
+    "EGFR": 4.25,
+    "MET": 6.32,
+    "AXL": 6.36,
+    "CD274": 4.34
+   }
+  },
+  {
+   "barcode": "SIM0606-1",
+   "array_row": 6,
+   "array_col": 6,
+   "pxl_x": 624.0,
+   "pxl_y": 546.8,
+   "tumor_cellularity": 0.0,
+   "expression_log2_umi": {
+    "EGFR": 2.18,
+    "MET": 3.14,
+    "AXL": 4.56,
+    "CD274": 5.54
+   }
+  },
+  {
+   "barcode": "SIM0607-1",
+   "array_row": 6,
+   "array_col": 7,
+   "pxl_x": 720.0,
+   "pxl_y": 546.8,
+   "tumor_cellularity": 0.24,
+   "expression_log2_umi": {
+    "EGFR": 3.47,
+    "MET": 1.73,
+    "AXL": 3.55,
+    "CD274": 3.9
+   }
+  },
+  {
+   "barcode": "SIM0608-1",
+   "array_row": 6,
+   "array_col": 8,
+   "pxl_x": 816.0,
+   "pxl_y": 546.8,
+   "tumor_cellularity": 0.05,
+   "expression_log2_umi": {
+    "EGFR": 1.61,
+    "MET": 1.46,
+    "AXL": 2.95,
+    "CD274": 3.78
+   }
+  },
+  {
+   "barcode": "SIM0609-1",
+   "array_row": 6,
+   "array_col": 9,
+   "pxl_x": 912.0,
+   "pxl_y": 546.8,
+   "tumor_cellularity": 0.05,
+   "expression_log2_umi": {
+    "EGFR": 2.34,
+    "MET": 1.65,
+    "AXL": 3.16,
+    "CD274": 3.71
+   }
+  },
+  {
+   "barcode": "SIM0700-1",
+   "array_row": 7,
+   "array_col": 0,
+   "pxl_x": 96.0,
+   "pxl_y": 630.0,
+   "tumor_cellularity": 0.51,
+   "expression_log2_umi": {
+    "EGFR": 5.28,
+    "MET": 2.4,
+    "AXL": 3.32,
+    "CD274": 4.0
+   }
+  },
+  {
+   "barcode": "SIM0701-1",
+   "array_row": 7,
+   "array_col": 1,
+   "pxl_x": 192.0,
+   "pxl_y": 630.0,
+   "tumor_cellularity": 0.73,
+   "expression_log2_umi": {
+    "EGFR": 5.7,
+    "MET": 3.63,
+    "AXL": 3.97,
+    "CD274": 3.57
+   }
+  },
+  {
+   "barcode": "SIM0702-1",
+   "array_row": 7,
+   "array_col": 2,
+   "pxl_x": 288.0,
+   "pxl_y": 630.0,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 7.77,
+    "MET": 7.0,
+    "AXL": 4.92,
+    "CD274": 3.9
+   }
+  },
+  {
+   "barcode": "SIM0703-1",
+   "array_row": 7,
+   "array_col": 3,
+   "pxl_x": 384.0,
+   "pxl_y": 630.0,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 9.14,
+    "MET": 9.35,
+    "AXL": 5.82,
+    "CD274": 4.52
+   }
+  },
+  {
+   "barcode": "SIM0704-1",
+   "array_row": 7,
+   "array_col": 4,
+   "pxl_x": 480.0,
+   "pxl_y": 630.0,
+   "tumor_cellularity": 0.33,
+   "expression_log2_umi": {
+    "EGFR": 3.67,
+    "MET": 6.82,
+    "AXL": 6.74,
+    "CD274": 5.22
+   }
+  },
+  {
+   "barcode": "SIM0705-1",
+   "array_row": 7,
+   "array_col": 5,
+   "pxl_x": 576.0,
+   "pxl_y": 630.0,
+   "tumor_cellularity": 0.2,
+   "expression_log2_umi": {
+    "EGFR": 3.17,
+    "MET": 3.88,
+    "AXL": 5.32,
+    "CD274": 6.11
+   }
+  },
+  {
+   "barcode": "SIM0706-1",
+   "array_row": 7,
+   "array_col": 6,
+   "pxl_x": 672.0,
+   "pxl_y": 630.0,
+   "tumor_cellularity": 0.26,
+   "expression_log2_umi": {
+    "EGFR": 3.03,
+    "MET": 2.53,
+    "AXL": 3.63,
+    "CD274": 4.33
+   }
+  },
+  {
+   "barcode": "SIM0707-1",
+   "array_row": 7,
+   "array_col": 7,
+   "pxl_x": 768.0,
+   "pxl_y": 630.0,
+   "tumor_cellularity": 0.05,
+   "expression_log2_umi": {
+    "EGFR": 1.62,
+    "MET": 1.38,
+    "AXL": 3.25,
+    "CD274": 3.82
+   }
+  },
+  {
+   "barcode": "SIM0708-1",
+   "array_row": 7,
+   "array_col": 8,
+   "pxl_x": 864.0,
+   "pxl_y": 630.0,
+   "tumor_cellularity": 0.05,
+   "expression_log2_umi": {
+    "EGFR": 2.85,
+    "MET": 1.44,
+    "AXL": 3.64,
+    "CD274": 5.3
+   }
+  },
+  {
+   "barcode": "SIM0709-1",
+   "array_row": 7,
+   "array_col": 9,
+   "pxl_x": 960.0,
+   "pxl_y": 630.0,
+   "tumor_cellularity": 0.42,
+   "expression_log2_umi": {
+    "EGFR": 4.11,
+    "MET": 1.67,
+    "AXL": 2.92,
+    "CD274": 3.66
+   }
+  },
+  {
+   "barcode": "SIM0800-1",
+   "array_row": 8,
+   "array_col": 0,
+   "pxl_x": 48.0,
+   "pxl_y": 713.1,
+   "tumor_cellularity": 0.66,
+   "expression_log2_umi": {
+    "EGFR": 5.99,
+    "MET": 2.24,
+    "AXL": 2.65,
+    "CD274": 3.64
+   }
+  },
+  {
+   "barcode": "SIM0801-1",
+   "array_row": 8,
+   "array_col": 1,
+   "pxl_x": 144.0,
+   "pxl_y": 713.1,
+   "tumor_cellularity": 0.8,
+   "expression_log2_umi": {
+    "EGFR": 7.4,
+    "MET": 3.07,
+    "AXL": 2.03,
+    "CD274": 3.31
+   }
+  },
+  {
+   "barcode": "SIM0802-1",
+   "array_row": 8,
+   "array_col": 2,
+   "pxl_x": 240.0,
+   "pxl_y": 713.1,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 9.15,
+    "MET": 4.47,
+    "AXL": 3.13,
+    "CD274": 3.69
+   }
+  },
+  {
+   "barcode": "SIM0803-1",
+   "array_row": 8,
+   "array_col": 3,
+   "pxl_x": 336.0,
+   "pxl_y": 713.1,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 9.51,
+    "MET": 6.12,
+    "AXL": 4.39,
+    "CD274": 3.6
+   }
+  },
+  {
+   "barcode": "SIM0804-1",
+   "array_row": 8,
+   "array_col": 4,
+   "pxl_x": 432.0,
+   "pxl_y": 713.1,
+   "tumor_cellularity": 0.31,
+   "expression_log2_umi": {
+    "EGFR": 3.88,
+    "MET": 5.8,
+    "AXL": 6.0,
+    "CD274": 5.09
+   }
+  },
+  {
+   "barcode": "SIM0805-1",
+   "array_row": 8,
+   "array_col": 5,
+   "pxl_x": 528.0,
+   "pxl_y": 713.1,
+   "tumor_cellularity": 0.4,
+   "expression_log2_umi": {
+    "EGFR": 4.71,
+    "MET": 4.15,
+    "AXL": 4.61,
+    "CD274": 4.27
+   }
+  },
+  {
+   "barcode": "SIM0806-1",
+   "array_row": 8,
+   "array_col": 6,
+   "pxl_x": 624.0,
+   "pxl_y": 713.1,
+   "tumor_cellularity": 0.4,
+   "expression_log2_umi": {
+    "EGFR": 4.07,
+    "MET": 2.47,
+    "AXL": 2.68,
+    "CD274": 4.27
+   }
+  },
+  {
+   "barcode": "SIM0807-1",
+   "array_row": 8,
+   "array_col": 7,
+   "pxl_x": 720.0,
+   "pxl_y": 713.1,
+   "tumor_cellularity": 0.6,
+   "expression_log2_umi": {
+    "EGFR": 5.58,
+    "MET": 2.16,
+    "AXL": 2.58,
+    "CD274": 2.95
+   }
+  },
+  {
+   "barcode": "SIM0808-1",
+   "array_row": 8,
+   "array_col": 8,
+   "pxl_x": 816.0,
+   "pxl_y": 713.1,
+   "tumor_cellularity": 0.76,
+   "expression_log2_umi": {
+    "EGFR": 6.4,
+    "MET": 1.48,
+    "AXL": 2.43,
+    "CD274": 3.31
+   }
+  },
+  {
+   "barcode": "SIM0809-1",
+   "array_row": 8,
+   "array_col": 9,
+   "pxl_x": 912.0,
+   "pxl_y": 713.1,
+   "tumor_cellularity": 0.49,
+   "expression_log2_umi": {
+    "EGFR": 5.33,
+    "MET": 2.55,
+    "AXL": 3.66,
+    "CD274": 3.67
+   }
+  },
+  {
+   "barcode": "SIM0900-1",
+   "array_row": 9,
+   "array_col": 0,
+   "pxl_x": 96.0,
+   "pxl_y": 796.2,
+   "tumor_cellularity": 0.43,
+   "expression_log2_umi": {
+    "EGFR": 3.65,
+    "MET": 2.18,
+    "AXL": 2.74,
+    "CD274": 3.7
+   }
+  },
+  {
+   "barcode": "SIM0901-1",
+   "array_row": 9,
+   "array_col": 1,
+   "pxl_x": 192.0,
+   "pxl_y": 796.2,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 9.7,
+    "MET": 3.1,
+    "AXL": 1.81,
+    "CD274": 2.85
+   }
+  },
+  {
+   "barcode": "SIM0902-1",
+   "array_row": 9,
+   "array_col": 2,
+   "pxl_x": 288.0,
+   "pxl_y": 796.2,
+   "tumor_cellularity": 0.71,
+   "expression_log2_umi": {
+    "EGFR": 5.82,
+    "MET": 3.14,
+    "AXL": 3.43,
+    "CD274": 3.59
+   }
+  },
+  {
+   "barcode": "SIM0903-1",
+   "array_row": 9,
+   "array_col": 3,
+   "pxl_x": 384.0,
+   "pxl_y": 796.2,
+   "tumor_cellularity": 0.23,
+   "expression_log2_umi": {
+    "EGFR": 3.38,
+    "MET": 3.07,
+    "AXL": 4.71,
+    "CD274": 4.95
+   }
+  },
+  {
+   "barcode": "SIM0904-1",
+   "array_row": 9,
+   "array_col": 4,
+   "pxl_x": 480.0,
+   "pxl_y": 796.2,
+   "tumor_cellularity": 0.54,
+   "expression_log2_umi": {
+    "EGFR": 4.85,
+    "MET": 2.92,
+    "AXL": 4.09,
+    "CD274": 3.82
+   }
+  },
+  {
+   "barcode": "SIM0905-1",
+   "array_row": 9,
+   "array_col": 5,
+   "pxl_x": 576.0,
+   "pxl_y": 796.2,
+   "tumor_cellularity": 0.85,
+   "expression_log2_umi": {
+    "EGFR": 7.1,
+    "MET": 2.88,
+    "AXL": 2.93,
+    "CD274": 3.39
+   }
+  },
+  {
+   "barcode": "SIM0906-1",
+   "array_row": 9,
+   "array_col": 6,
+   "pxl_x": 672.0,
+   "pxl_y": 796.2,
+   "tumor_cellularity": 0.95,
+   "expression_log2_umi": {
+    "EGFR": 7.36,
+    "MET": 2.56,
+    "AXL": 2.98,
+    "CD274": 3.07
+   }
+  },
+  {
+   "barcode": "SIM0907-1",
+   "array_row": 9,
+   "array_col": 7,
+   "pxl_x": 768.0,
+   "pxl_y": 796.2,
+   "tumor_cellularity": 0.82,
+   "expression_log2_umi": {
+    "EGFR": 6.38,
+    "MET": 2.24,
+    "AXL": 2.85,
+    "CD274": 2.3
+   }
+  },
+  {
+   "barcode": "SIM0908-1",
+   "array_row": 9,
+   "array_col": 8,
+   "pxl_x": 864.0,
+   "pxl_y": 796.2,
+   "tumor_cellularity": 0.73,
+   "expression_log2_umi": {
+    "EGFR": 6.22,
+    "MET": 2.02,
+    "AXL": 2.63,
+    "CD274": 3.02
+   }
+  },
+  {
+   "barcode": "SIM0909-1",
+   "array_row": 9,
+   "array_col": 9,
+   "pxl_x": 960.0,
+   "pxl_y": 796.2,
+   "tumor_cellularity": 0.13,
+   "expression_log2_umi": {
+    "EGFR": 2.87,
+    "MET": 2.18,
+    "AXL": 3.73,
+    "CD274": 4.61
+   }
+  },
+  {
+   "barcode": "SIM1000-1",
+   "array_row": 10,
+   "array_col": 0,
+   "pxl_x": 48.0,
+   "pxl_y": 879.4,
+   "tumor_cellularity": 0.48,
+   "expression_log2_umi": {
+    "EGFR": 4.84,
+    "MET": 1.77,
+    "AXL": 3.31,
+    "CD274": 3.85
+   }
+  },
+  {
+   "barcode": "SIM1001-1",
+   "array_row": 10,
+   "array_col": 1,
+   "pxl_x": 144.0,
+   "pxl_y": 879.4,
+   "tumor_cellularity": 0.85,
+   "expression_log2_umi": {
+    "EGFR": 6.49,
+    "MET": 2.31,
+    "AXL": 2.47,
+    "CD274": 3.42
+   }
+  },
+  {
+   "barcode": "SIM1002-1",
+   "array_row": 10,
+   "array_col": 2,
+   "pxl_x": 240.0,
+   "pxl_y": 879.4,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 8.12,
+    "MET": 2.45,
+    "AXL": 2.91,
+    "CD274": 3.37
+   }
+  },
+  {
+   "barcode": "SIM1003-1",
+   "array_row": 10,
+   "array_col": 3,
+   "pxl_x": 336.0,
+   "pxl_y": 879.4,
+   "tumor_cellularity": 0.16,
+   "expression_log2_umi": {
+    "EGFR": 3.34,
+    "MET": 2.17,
+    "AXL": 3.75,
+    "CD274": 4.4
+   }
+  },
+  {
+   "barcode": "SIM1004-1",
+   "array_row": 10,
+   "array_col": 4,
+   "pxl_x": 432.0,
+   "pxl_y": 879.4,
+   "tumor_cellularity": 1.0,
+   "expression_log2_umi": {
+    "EGFR": 7.57,
+    "MET": 2.98,
+    "AXL": 2.74,
+    "CD274": 2.82
+   }
+  },
+  {
+   "barcode": "SIM1005-1",
+   "array_row": 10,
+   "array_col": 5,
+   "pxl_x": 528.0,
+   "pxl_y": 879.4,
+   "tumor_cellularity": 0.59,
+   "expression_log2_umi": {
+    "EGFR": 5.3,
+    "MET": 1.82,
+    "AXL": 3.12,
+    "CD274": 3.38
+   }
+  },
+  {
+   "barcode": "SIM1006-1",
+   "array_row": 10,
+   "array_col": 6,
+   "pxl_x": 624.0,
+   "pxl_y": 879.4,
+   "tumor_cellularity": 0.2,
+   "expression_log2_umi": {
+    "EGFR": 2.67,
+    "MET": 1.85,
+    "AXL": 3.43,
+    "CD274": 3.75
+   }
+  },
+  {
+   "barcode": "SIM1007-1",
+   "array_row": 10,
+   "array_col": 7,
+   "pxl_x": 720.0,
+   "pxl_y": 879.4,
+   "tumor_cellularity": 0.39,
+   "expression_log2_umi": {
+    "EGFR": 4.46,
+    "MET": 2.57,
+    "AXL": 2.61,
+    "CD274": 4.35
+   }
+  },
+  {
+   "barcode": "SIM1008-1",
+   "array_row": 10,
+   "array_col": 8,
+   "pxl_x": 816.0,
+   "pxl_y": 879.4,
+   "tumor_cellularity": 0.38,
+   "expression_log2_umi": {
+    "EGFR": 3.86,
+    "MET": 1.75,
+    "AXL": 2.99,
+    "CD274": 3.37
+   }
+  },
+  {
+   "barcode": "SIM1009-1",
+   "array_row": 10,
+   "array_col": 9,
+   "pxl_x": 912.0,
+   "pxl_y": 879.4,
+   "tumor_cellularity": 0.28,
+   "expression_log2_umi": {
+    "EGFR": 4.01,
+    "MET": 1.97,
+    "AXL": 2.97,
+    "CD274": 3.89
+   }
+  },
+  {
+   "barcode": "SIM1100-1",
+   "array_row": 11,
+   "array_col": 0,
+   "pxl_x": 96.0,
+   "pxl_y": 962.5,
+   "tumor_cellularity": 0.7,
+   "expression_log2_umi": {
+    "EGFR": 5.38,
+    "MET": 2.06,
+    "AXL": 2.84,
+    "CD274": 2.72
+   }
+  },
+  {
+   "barcode": "SIM1101-1",
+   "array_row": 11,
+   "array_col": 1,
+   "pxl_x": 192.0,
+   "pxl_y": 962.5,
+   "tumor_cellularity": 0.29,
+   "expression_log2_umi": {
+    "EGFR": 3.49,
+    "MET": 1.89,
+    "AXL": 3.53,
+    "CD274": 4.4
+   }
+  },
+  {
+   "barcode": "SIM1102-1",
+   "array_row": 11,
+   "array_col": 2,
+   "pxl_x": 288.0,
+   "pxl_y": 962.5,
+   "tumor_cellularity": 0.12,
+   "expression_log2_umi": {
+    "EGFR": 2.5,
+    "MET": 1.5,
+    "AXL": 3.17,
+    "CD274": 3.66
+   }
+  },
+  {
+   "barcode": "SIM1103-1",
+   "array_row": 11,
+   "array_col": 3,
+   "pxl_x": 384.0,
+   "pxl_y": 962.5,
+   "tumor_cellularity": 0.13,
+   "expression_log2_umi": {
+    "EGFR": 2.6,
+    "MET": 2.07,
+    "AXL": 3.55,
+    "CD274": 3.85
+   }
+  },
+  {
+   "barcode": "SIM1104-1",
+   "array_row": 11,
+   "array_col": 4,
+   "pxl_x": 480.0,
+   "pxl_y": 962.5,
+   "tumor_cellularity": 0.03,
+   "expression_log2_umi": {
+    "EGFR": 2.12,
+    "MET": 1.83,
+    "AXL": 3.31,
+    "CD274": 4.74
+   }
+  },
+  {
+   "barcode": "SIM1105-1",
+   "array_row": 11,
+   "array_col": 5,
+   "pxl_x": 576.0,
+   "pxl_y": 962.5,
+   "tumor_cellularity": 0.25,
+   "expression_log2_umi": {
+    "EGFR": 3.05,
+    "MET": 2.54,
+    "AXL": 3.34,
+    "CD274": 3.92
+   }
+  },
+  {
+   "barcode": "SIM1106-1",
+   "array_row": 11,
+   "array_col": 6,
+   "pxl_x": 672.0,
+   "pxl_y": 962.5,
+   "tumor_cellularity": 0.17,
+   "expression_log2_umi": {
+    "EGFR": 2.89,
+    "MET": 0.99,
+    "AXL": 3.69,
+    "CD274": 4.8
+   }
+  },
+  {
+   "barcode": "SIM1107-1",
+   "array_row": 11,
+   "array_col": 7,
+   "pxl_x": 768.0,
+   "pxl_y": 962.5,
+   "tumor_cellularity": 0.08,
+   "expression_log2_umi": {
+    "EGFR": 2.18,
+    "MET": 1.87,
+    "AXL": 4.18,
+    "CD274": 4.41
+   }
+  },
+  {
+   "barcode": "SIM1108-1",
+   "array_row": 11,
+   "array_col": 8,
+   "pxl_x": 864.0,
+   "pxl_y": 962.5,
+   "tumor_cellularity": 0.15,
+   "expression_log2_umi": {
+    "EGFR": 3.15,
+    "MET": 2.12,
+    "AXL": 3.67,
+    "CD274": 4.43
+   }
+  },
+  {
+   "barcode": "SIM1109-1",
+   "array_row": 11,
+   "array_col": 9,
+   "pxl_x": 960.0,
+   "pxl_y": 962.5,
+   "tumor_cellularity": 0.25,
+   "expression_log2_umi": {
+    "EGFR": 3.69,
+    "MET": 1.34,
+    "AXL": 3.67,
+    "CD274": 4.82
+   }
+  }
+ ]
+}

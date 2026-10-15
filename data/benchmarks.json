@@ -1,0 +1,22 @@
+{
+  "egfr_affinity": {
+    "dataset": "ChEMBL EGFR (CHEMBL203) IC50, TeachOpenCADD T001 export",
+    "n_compounds": 5568,
+    "protocol": "5-fold random cross-validation (seed 7)",
+    "model": "Ridge (alpha=1.0) on 2048-bucket hashed SMILES 1-4-grams",
+    "pearson_r": 0.743,
+    "spearman_rho": 0.743,
+    "rmse_pic50": 0.942,
+    "mae_pic50": 0.74,
+    "predict_mean_baseline_rmse": 1.404,
+    "generated": "2026-10-15"
+  },
+  "runtime": {
+    "fusion_latency_ms_median": 12.6,
+    "fusion_latency_ms_p90": 13.6,
+    "fusion_inputs": "1024 H&E patch tokens, 5 SMILES token sets, 2 text tokens",
+    "pipeline_latency_ms_median_offline": 360.4,
+    "machine": "Linux x86_64, Python 3.13.16, CPU only",
+    "generated": "2026-10-15"
+  }
+}

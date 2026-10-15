@@ -6,8 +6,9 @@ Multimodal AI Hackathon 2026 (IIT Mandi, Augli.ai, PurpleRain Tech, LDV Labs).
 
 import json
 import os
-from flask import Flask, jsonify, render_template
+from flask import Flask, abort, jsonify, render_template, request, send_file
 from agents.orchestrator import MultiAgentOrchestrator
+from services import histology, spatial
 
 app = Flask(__name__)
 orchestrator = MultiAgentOrchestrator()
@@ -42,17 +43,61 @@ def analyze():
 
 @app.route("/api/health", methods=["GET"])
 def health():
-    return jsonify({"status": "healthy", "service": "OmniBio-Agent", "version": "1.0.0"})
+    return jsonify({"status": "healthy", "service": "OmniBio-Agent", "version": "2.0.0"})
 
 
 @app.route("/api/visium", methods=["GET"])
 def get_visium_overlay():
-    """Returns the 10x Genomics Visium spatial transcriptomics spots."""
-    visium_file = os.path.join(BASE_DIR, "data", "visium_luad_overlay.json")
-    if os.path.exists(visium_file):
-        with open(visium_file, "r", encoding="utf-8") as f:
-            return jsonify(json.load(f))
-    return jsonify({"error": "visium data not found"}), 404
+    """Visium-geometry spots with computed escape scores, Gi* hotspots and the spatial recommendation."""
+    return jsonify(spatial.analyze())
+
+
+@app.route("/api/histology", methods=["GET"])
+def get_histology():
+    """Composition and patch grid measured from the current H&E tile."""
+    return jsonify(histology.summary())
+
+
+@app.route("/api/histology", methods=["POST"])
+def upload_histology():
+    """Replace the H&E tile used by the Perceiver (multipart field 'image')."""
+    if "image" not in request.files:
+        return jsonify({"error": "send the tile as multipart field 'image'"}), 400
+    try:
+        histology.save_upload(request.files["image"].read())
+    except Exception as exc:
+        return jsonify({"error": f"could not read image: {exc}"}), 400
+    return jsonify(histology.summary())
+
+
+@app.route("/api/histology", methods=["DELETE"])
+def reset_histology():
+    histology.reset_upload()
+    return jsonify(histology.summary())
+
+
+@app.route("/api/histology/image", methods=["GET"])
+def get_histology_image():
+    return send_file(histology.current_image_path(), max_age=0)
+
+
+@app.route("/api/pdb/<pdb_id>", methods=["GET"])
+def get_pdb(pdb_id):
+    """Serves a locally cached structure from data/pdb/<ID>.pdb so the 3D viewer works offline."""
+    path = os.path.join(BASE_DIR, "data", "pdb", f"{pdb_id.upper()}.pdb")
+    if not pdb_id.isalnum() or not os.path.exists(path):
+        abort(404)
+    return send_file(path, mimetype="chemical/x-pdb", max_age=0)
+
+
+@app.route("/api/benchmarks", methods=["GET"])
+def get_benchmarks():
+    """Metrics produced by scripts/train_affinity_model.py and scripts/run_benchmarks.py."""
+    path = os.path.join(BASE_DIR, "data", "benchmarks.json")
+    if not os.path.exists(path):
+        return jsonify({}), 404
+    with open(path, encoding="utf-8") as f:
+        return jsonify(json.load(f))
 
 
 if __name__ == "__main__":

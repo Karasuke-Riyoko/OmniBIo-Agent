@@ -1,0 +1,281 @@
+{
+ "_note": "ILLUSTRATIVE dose-response points for demonstrating the Chou-Talalay median-effect calculation. They are not measurements from SAVANNAH, MARIPOSA or Zhou et al. (clinical trials do not report combination indices); they were chosen so the CI at ED50 lands near the values this project cites. Replace with measured cell-line combination screens (e.g. DrugComb) to obtain real CIs.",
+ "regimens": {
+  "Pair_A_MET_Bypass_Blockade": {
+   "context": "EGFR-mutant, MET-amplified cell model",
+   "alpha": 1,
+   "drug_1": {
+    "name": "Osimertinib",
+    "unit": "nM",
+    "dose": [
+     52.5,
+     105.0,
+     210.0,
+     420,
+     840,
+     1680,
+     3360
+    ],
+    "fa": [
+     0.096,
+     0.17,
+     0.321,
+     0.494,
+     0.676,
+     0.818,
+     0.871
+    ]
+   },
+   "drug_2": {
+    "name": "Savolitinib",
+    "unit": "nM",
+    "dose": [
+     20.0,
+     40.0,
+     80.0,
+     160,
+     320,
+     640,
+     1280
+    ],
+    "fa": [
+     0.076,
+     0.157,
+     0.323,
+     0.502,
+     0.692,
+     0.836,
+     0.911
+    ]
+   },
+   "combination": {
+    "ratio_d1_to_d2": 1.0,
+    "total_dose": [
+     10.278,
+     20.557,
+     41.113,
+     82.227,
+     164.453,
+     328.906,
+     657.812
+    ],
+    "fa": [
+     0.061,
+     0.14,
+     0.292,
+     0.498,
+     0.725,
+     0.855,
+     0.938
+    ]
+   }
+  },
+  "Pair_B_Bispecific_Dual_Receptor_Blockade": {
+   "context": "EGFR-mutant cell model with EGFR/MET co-signalling",
+   "alpha": 1,
+   "drug_1": {
+    "name": "Lazertinib",
+    "unit": "nM",
+    "dose": [
+     4.75,
+     9.5,
+     19.0,
+     38,
+     76,
+     152,
+     304
+    ],
+    "fa": [
+     0.115,
+     0.202,
+     0.33,
+     0.498,
+     0.674,
+     0.831,
+     0.884
+    ]
+   },
+   "drug_2": {
+    "name": "Amivantamab",
+    "unit": "ug/mL",
+    "dose": [
+     1.5,
+     3.0,
+     6.0,
+     12,
+     24,
+     48,
+     96
+    ],
+    "fa": [
+     0.133,
+     0.228,
+     0.343,
+     0.497,
+     0.663,
+     0.786,
+     0.868
+    ]
+   },
+   "combination": {
+    "ratio_d1_to_d2": 2.0,
+    "total_dose": [
+     1.108,
+     2.216,
+     4.432,
+     8.864,
+     17.727,
+     35.454,
+     70.909
+    ],
+    "fa": [
+     0.077,
+     0.15,
+     0.309,
+     0.49,
+     0.673,
+     0.845,
+     0.937
+    ]
+   }
+  },
+  "Gefitinib_Osimertinib|trans": {
+   "context": "T790M + C797S on separate alleles (trans)",
+   "alpha": 0,
+   "drug_1": {
+    "name": "Gefitinib",
+    "unit": "nM",
+    "dose": [
+     112.5,
+     225.0,
+     450.0,
+     900,
+     1800,
+     3600,
+     7200
+    ],
+    "fa": [
+     0.11,
+     0.196,
+     0.334,
+     0.499,
+     0.685,
+     0.812,
+     0.892
+    ]
+   },
+   "drug_2": {
+    "name": "Osimertinib",
+    "unit": "nM",
+    "dose": [
+     87.5,
+     175.0,
+     350.0,
+     700,
+     1400,
+     2800,
+     5600
+    ],
+    "fa": [
+     0.114,
+     0.199,
+     0.327,
+     0.506,
+     0.674,
+     0.797,
+     0.875
+    ]
+   },
+   "combination": {
+    "ratio_d1_to_d2": 1.0,
+    "total_dose": [
+     63.984,
+     127.969,
+     255.938,
+     511.875,
+     1023.75,
+     2047.5,
+     4095.0
+    ],
+    "fa": [
+     0.093,
+     0.17,
+     0.323,
+     0.505,
+     0.66,
+     0.822,
+     0.89
+    ]
+   }
+  },
+  "Gefitinib_Osimertinib|cis": {
+   "context": "T790M + C797S on the same allele (cis)",
+   "alpha": 0,
+   "drug_1": {
+    "name": "Gefitinib",
+    "unit": "nM",
+    "dose": [
+     375.0,
+     750.0,
+     1500.0,
+     3000,
+     6000,
+     12000,
+     24000
+    ],
+    "fa": [
+     0.135,
+     0.214,
+     0.343,
+     0.507,
+     0.666,
+     0.743,
+     0.858
+    ]
+   },
+   "drug_2": {
+    "name": "Osimertinib",
+    "unit": "nM",
+    "dose": [
+     312.5,
+     625.0,
+     1250.0,
+     2500,
+     5000,
+     10000,
+     20000
+    ],
+    "fa": [
+     0.134,
+     0.22,
+     0.36,
+     0.488,
+     0.656,
+     0.761,
+     0.891
+    ]
+   },
+   "combination": {
+    "ratio_d1_to_d2": 1.0,
+    "total_dose": [
+     426.136,
+     852.273,
+     1704.545,
+     3409.091,
+     6818.182,
+     13636.364,
+     27272.727
+    ],
+    "fa": [
+     0.159,
+     0.246,
+     0.352,
+     0.517,
+     0.645,
+     0.763,
+     0.86
+    ]
+   }
+  }
+ }
+}
