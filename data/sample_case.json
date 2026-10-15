@@ -1,0 +1,122 @@
+{
+  "patient_id": "PT-ONCO-2026-X8",
+  "age": 58,
+  "gender": "Female",
+  "diagnosis": "Metastatic Non-Small Cell Lung Carcinoma (Adenocarcinoma)",
+  "clinical_summary": "Stage IV NSCLC with secondary bone metastasis. First-line 1st-Gen Erlotinib failed at 14 months with acquired T790M. Liquid biopsy (ctDNA) re-evaluation now monitors emergence of tertiary C797S resistance.",
+  "genomic_mutations": [
+    {
+      "gene": "EGFR",
+      "mutation": "L858R",
+      "variant_allele_frequency": 0.44,
+      "clinical_significance": "Pathogenic Driver",
+      "target_resistance": "Sensitizing to all generation TKIs"
+    },
+    {
+      "gene": "EGFR",
+      "mutation": "T790M",
+      "variant_allele_frequency": 0.38,
+      "clinical_significance": "Pathogenic Gatekeeper",
+      "target_resistance": "Restores ATP affinity; resistant to 1st/2nd Gen TKIs; targeted by 3rd Gen (Osimertinib)"
+    },
+    {
+      "gene": "EGFR",
+      "mutation": "C797S (Subclonal Risk)",
+      "variant_allele_frequency": 0.08,
+      "clinical_significance": "Tertiary Resistance",
+      "target_resistance": "Abolishes covalent acrylamide Michael addition; resistant to Osimertinib"
+    },
+    {
+      "gene": "TP53",
+      "mutation": "R273H",
+      "variant_allele_frequency": 0.36,
+      "clinical_significance": "Pathogenic",
+      "target_resistance": "Co-alteration with RB1 wild-type; monitors against neuroendocrine SCLC lineage shift"
+    }
+  ],
+  "conformational_ensembles": [
+    {
+      "pdb_id": "1M17",
+      "title": "Wild-Type EGFR + Erlotinib (Active Conformation)",
+      "significance": "Demonstrates baseline ATP pocket before gatekeeper steric shift"
+    },
+    {
+      "pdb_id": "4ZAU",
+      "title": "EGFR + Osimertinib (AZD9291) Covalent Adduct",
+      "significance": "Irreversible covalent bond formed with Cys797 sulfhydryl group"
+    },
+    {
+      "pdb_id": "6LUD",
+      "title": "EGFR L858R / T790M / C797S Triple Mutant",
+      "significance": "Ser797 hydroxyl replaces Cys797 thiol, abolishing covalent binding"
+    },
+    {
+      "pdb_id": "6Z4B",
+      "title": "EGFR T790M + Allosteric Inhibitor EAI045",
+      "significance": "Binds αC-helix-out allosteric pocket, overcoming ATP-site resistance"
+    }
+  ],
+  "candidate_compounds": [
+    {
+      "name": "Osimertinib (AZD9291)",
+      "smiles": "CC(=O)N1CCN(CC1)C2=CC(=C(C=C2NC3=NC=CC(=N3)C4=CN(C5=CC=CC=C54)C)NC(=O)C=C)OC",
+      "chembl_id": "CHEMBL3353410",
+      "target_pdb": "4ZAU",
+      "class": "3rd-Gen Irreversible EGFR TKI",
+      "molecular_weight": 499.6,
+      "mechanism": "Covalent Michael addition to Cys797; highly potent against L858R/T790M"
+    },
+    {
+      "name": "BLU-945 (4th-Gen TKI)",
+      "smiles": "CC(C)NC1=NC=C(C=N1)C2=CN(C3=CC=CC=C32)C4=CC(=C(C=C4)F)NC(=O)CC5=CC=NC=C5",
+      "chembl_id": "CHEMBL4794821",
+      "target_pdb": "6LUD",
+      "class": "4th-Gen Mutant-Selective TKI",
+      "molecular_weight": 526.6,
+      "mechanism": "Reversible ATP-competitive inhibition targeting triple-mutant L858R/T790M/C797S"
+    },
+    {
+      "name": "EGFR PROTAC Degrader 14",
+      "smiles": "CC1=C(C=C(C=C1)CNC2=NC=C(C=N2)NC3=CC(=C(C=C3)OC4CCNCC4)OC)C(=O)N5CCC(CC5)NC(=O)C6=CC=CC=C6C(=O)N7C(=O)CCC7=O",
+      "chembl_id": "CHEMBL5129983",
+      "target_pdb": "6LUD",
+      "class": "Bifunctional Targeted Protein Degrader",
+      "molecular_weight": 892.4,
+      "mechanism": "VHL/Cereblon E3 ubiquitin ligase recruitment; proteasomal degradation (DC50 = 2.9 nM)"
+    },
+    {
+      "name": "EAI045 + Cetuximab (Allosteric)",
+      "smiles": "CC1=CC=C(C=C1)S(=O)(=O)NC2=CC=C(C=C2)C(=O)NC3=CC=C(C=C3)Cl",
+      "chembl_id": "CHEMBL3989824",
+      "target_pdb": "6Z4B",
+      "class": "4th-Gen Allosteric Inhibitor",
+      "molecular_weight": 444.9,
+      "mechanism": "Non-ATP competitive allosteric binding at αC-helix-out pocket; requires dimerization blockade"
+    },
+    {
+      "name": "Erlotinib",
+      "smiles": "COCCOC1=C(C=C2C(=C1)C(=NC=N2)NC3=CC=CC(=C3)C#C)OCCOC",
+      "chembl_id": "CHEMBL545",
+      "target_pdb": "1M17",
+      "class": "1st-Gen Reversible TKI",
+      "molecular_weight": 393.4,
+      "mechanism": "Reversible ATP competitor; ineffective against restored ATP affinity of T790M"
+    }
+  ],
+  "histopathology": {
+    "slide_id": "TCGA-LUAD-H084.svs",
+    "tissue_type": "Lung Pleural Biopsy",
+    "stain": "Hematoxylin and Eosin (H&E)",
+    "cellularity": 78.4,
+    "mitotic_index": "High (Grade 3)",
+    "stromal_desmoplasia_pct": 64.2,
+    "caf_density": "High (Collagen Type I crosslinking, IFP > 28 mmHg)",
+    "til_phenotype": "Immune-Excluded (sTILs trapped in peritumoral fibrotic ring)",
+    "patches": [
+      {"patch_id": "P01", "coords": [128, 256], "tumor_prob": 0.94, "stromal_prob": 0.04, "necrosis_prob": 0.02},
+      {"patch_id": "P02", "coords": [128, 288], "tumor_prob": 0.89, "stromal_prob": 0.08, "necrosis_prob": 0.03},
+      {"patch_id": "P03", "coords": [160, 256], "tumor_prob": 0.96, "stromal_prob": 0.03, "necrosis_prob": 0.01},
+      {"patch_id": "P04", "coords": [160, 288], "tumor_prob": 0.72, "stromal_prob": 0.22, "necrosis_prob": 0.06}
+    ]
+  }
+}
